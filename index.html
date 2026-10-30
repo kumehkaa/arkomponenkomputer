@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ainun Najila - Media Pembelajaran Informatika Kelas IX</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#2563EB',
+                            darkblue: '#1E40AF',
+                            purple: '#7C3AED',
+                            cyan: '#06B6D4',
+                            lightbg: '#F8FAFC',
+                            accent: '#38BDF8'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8FAFC;
+            overflow-x: hidden;
+        }
+
+        /* Custom Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .animate-glow {
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Card Hover Effects */
+        .card-interactive {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-interactive:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-brand-cyan selection:text-white">
+
+    <!-- A. NAVBAR SECTION -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-slate-100 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Web Name -->
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-blue to-brand-purple flex items-center justify-center text-white text-2xl shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform duration-300">
+                        <i class="fa-solid font-laptop-code"></i>
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-brand-blue via-brand-purple to-brand-cyan bg-clip-text text-transparent block leading-tight">
+                            Ainun Najila
+                        </span>
+                        <span class="text-xs text-slate-500 font-medium tracking-wide block">
+                            Informatika Kelas IX SMP
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+           <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+                    <a href="index.html" class="px-4 py-2 rounded-xl text-sm font-semibold bg-blue-50 text-brand-blue transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-house text-xs"></i> Beranda
+                    </a>
+                
+                    <a href="materi.html" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-brand-blue hover:bg-slate-50 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-microchip text-xs text-slate-400"></i> Materi
+                    </a>
+                    
+                    <a href="kuis.html" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-brand-blue hover:bg-slate-50 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-xs text-slate-400"></i> Kuis
+                    </a>
+
+                    <a href="kameraar.html" class="ml-2 px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-brand-purple to-brand-cyan text-white shadow-md shadow-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-camera-rotate"></i> Kamera AR
+                    </a>
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="mobile-menu-btn" type="button" class="md:hidden p-2.5 rounded-xl text-slate-600 hover:text-brand-blue hover:bg-slate-100 transition-colors focus:outline-none" aria-label="Buka Menu Navigasi">
+                    <i id="hamburger-icon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 shadow-xl">
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-brand-blue font-semibold text-sm">
+                <i class="fa-solid fa-house w-5 text-center"></i> Beranda
+            </a>
+           
+            <a href="materi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm">
+                <i class="fa-solid fa-microchip w-5 text-center text-slate-400"></i> Materi
+            </a>
+            <a href="kameraar.html" class="flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-brand-purple to-brand-cyan text-white font-semibold text-sm shadow-md mt-2">
+                <i class="fa-solid fa-camera-rotate"></i> Kamera AR
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-24 lg:pt-28">
+        <!-- B. HERO SECTION -->
+        <section class="relative overflow-hidden py-12 lg:py-20">
+            <!-- Decorative Glow Background Elements -->
+            <div class="absolute top-1/4 left-10 w-72 h-72 bg-blue-300/30 rounded-full filter blur-3xl animate-glow -z-10"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-purple-300/30 rounded-full filter blur-3xl animate-glow -z-10" style="animation-delay: 2s;"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Column Text Content -->
+                    <div class="lg:col-span-7 text-center lg:text-left">
+                        <!-- Class Badge -->
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 text-brand-blue text-xs sm:text-sm font-bold tracking-wide uppercase mb-6 shadow-sm">
+                            <i class="fa-solid fa-sparkles text-brand-purple"></i> INFORMATIKA KELAS IX SMP
+                        </div>
+                        
+                        <!-- Main Headline -->
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.15] tracking-tight mb-6">
+                            Jelajahi Dunia <br class="hidden sm:inline">
+                            <span class="bg-gradient-to-r from-brand-blue via-brand-purple to-brand-cyan bg-clip-text text-transparent">
+                                Sistem Komputer!
+                            </span>
+                        </h1>
+                        
+                        <!-- Description -->
+                        <p class="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-8 font-normal">
+                            Kenali komponen komputer, pelajari cara kerjanya, dan jelajahi teknologi melalui pengalaman belajar yang interaktif dan menyenangkan.
+                        </p>
+                        
+                        <!-- Call to Action Buttons -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                            <a href="materi.html" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-blue hover:bg-brand-darkblue text-white font-semibold text-base shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 group">
+                                <span>Mulai Belajar</span>
+                                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                            <a href="kameraar.html" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-slate-50 text-brand-purple border-2 border-purple-200 font-semibold text-base shadow-sm hover:border-purple-300 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
+                                <i class="fa-solid fa-vr-cardboard text-xl text-brand-cyan"></i>
+                                <span>Jelajahi Kamera AR</span>
+                            </a>
+                        </div>
+
+                        <!-- Stats / Quick Info -->
+                        <div class="mt-12 grid grid-cols-3 gap-4 pt-8 border-t border-slate-200/60 max-w-md mx-auto lg:mx-0">
+                            <div>
+                                <span class="block text-xl font-bold text-slate-900">3 Utama</span>
+                                <span class="text-xs text-slate-500">Hardware, Software, Brainware</span>
+                            </div>
+                            <div>
+                                <span class="block text-xl font-bold text-slate-900">Interactive</span>
+                                <span class="text-xs text-slate-500">Visual & AR 3D</span>
+                            </div>
+                            <div>
+                                <span class="block text-xl font-bold text-slate-900">SMP IX</span>
+                                <span class="text-xs text-slate-500">Kurikulum Merdeka</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column 3D/Tech SVG Illustration -->
+                    <div class="lg:col-span-5 relative flex justify-center items-center">
+                        <div class="relative w-full max-w-md animate-float">
+                            <!-- SVG Graphic Representation of Computer System -->
+                            <svg viewBox="0 0 500 500" class="w-full h-auto filter drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#8B5CF6;stop-opacity:1" />
+                                    </linearGradient>
+                                    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
+                                    </linearGradient>
+                                    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1E293B;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#0F172A;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Decorative Outer Ring -->
+                                <circle cx="250" cy="250" r="210" fill="none" stroke="url(#grad2)" stroke-width="3" stroke-dasharray="10 15" class="opacity-40" />
+
+                                <!-- Monitor Base -->
+                                <ellipse cx="250" cy="410" rx="90" ry="18" fill="#CBD5E1" />
+                                <path d="M230 350 L270 350 L280 410 L220 410 Z" fill="#94A3B8" />
+
+                                <!-- Monitor Body -->
+                                <rect x="90" y="120" width="320" height="230" rx="20" fill="#1E293B" stroke="#334155" stroke-width="6" />
+                                <!-- Screen -->
+                                <rect x="105" y="135" width="290" height="200" rx="12" fill="url(#screenGrad)" />
+                                
+                                <!-- Code / Graphics inside screen -->
+                                <rect x="130" y="160" width="120" height="12" rx="6" fill="#38BDF8" opacity="0.8" />
+                                <rect x="130" y="185" width="80" height="10" rx="5" fill="#818CF8" opacity="0.6" />
+                                <rect x="130" y="205" width="160" height="10" rx="5" fill="#4ADE80" opacity="0.5" />
+                                
+                                <!-- Central CPU Graphic Icon inside Screen -->
+                                <rect x="290" y="170" width="80" height="80" rx="14" fill="url(#grad1)" />
+                                <path d="M320 195 L340 195 L340 225 L320 225 Z" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round" />
+                                <circle cx="330" cy="210" r="5" fill="#06B6D4" />
+                                
+                                <!-- Screen Bottom Bar & Webcam -->
+                                <circle cx="250" cy="127" r="4" fill="#64748B" />
+                                
+                                <!-- Floating Orbit Elements (Hardware, Software, Brainware representation) -->
+                                <!-- Chip (Floating Top Left) -->
+                                <g transform="translate(40, 90)">
+                                    <rect x="0" y="0" width="60" height="60" rx="14" fill="#FFFFFF" shadow="true" class="drop-shadow-lg"/>
+                                    <i class="fa-solid fa-microchip text-2xl text-brand-blue"></i>
+                                    <rect x="15" y="15" width="30" height="30" rx="8" fill="#3B82F6" />
+                                </g>
+
+                                <!-- Mouse Floating Right -->
+                                <g transform="translate(390, 240)">
+                                    <rect x="0" y="0" width="55" height="75" rx="25" fill="#FFFFFF" class="drop-shadow-lg" />
+                                    <line x1="27.5" y1="10" x2="27.5" y2="30" stroke="#94A3B8" stroke-width="3" stroke-linecap="round" />
+                                </g>
+
+                                <!-- Gear/Setting Floating Bottom Left -->
+                                <g transform="translate(60, 310)">
+                                    <circle cx="28" cy="28" r="28" fill="#8B5CF6" class="drop-shadow-md" />
+                                    <path d="M28 16 L28 40 M16 28 L40 28" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+                                </g>
+
+                                <!-- Keyboard (Front Accent) -->
+                                <rect x="120" y="380" width="260" height="20" rx="8" fill="#FFFFFF" class="drop-shadow-md" />
+                                <rect x="140" y="386" width="220" height="8" rx="4" fill="#E2E8F0" />
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- C. SECTION TIGA MENU UTAMA -->
+        <section class="py-16 bg-white border-y border-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-14">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+                        Pilih Menu Penjelajahan
+                    </h2>
+                    <p class="text-slate-600 text-base sm:text-lg">
+                        Klik salah satu menu di bawah ini untuk memulai petualangan belajarmu secara interaktif.
+                    </p>
+                </div>
+
+                <!-- 3 Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1: Petunjuk Penggunaan -->
+                   
+
+                    <!-- Card 2: Materi Sistem Komputer -->
+                    <a href="materi.html" class="group card-interactive bg-slate-50 hover:bg-white rounded-3xl p-8 border border-slate-200/80 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
+                        <div>
+                            <!-- Icon -->
+                            <div class="w-16 h-16 rounded-2xl bg-purple-100 text-brand-purple flex items-center justify-center text-3xl mb-6 group-hover:bg-brand-purple group-hover:text-white transition-colors duration-300 shadow-sm">
+                                <i class="fa-solid fa-microchip"></i>
+                            </div>
+                            <!-- Title -->
+                            <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-purple transition-colors">
+                                Materi Sistem Komputer
+                            </h3>
+                            <!-- Description -->
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                Kenali perangkat keras, perangkat lunak, dan brainware beserta fungsi dan contohnya.
+                            </p>
+                        </div>
+                        <!-- Button Link Text -->
+                        <div class="flex items-center text-sm font-bold text-brand-purple group-hover:translate-x-1 transition-transform">
+                            <span>Pelajari Materi</span>
+                            <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                        </div>
+                    </a>
+
+                    <!-- Card Kuis Ujian -->
+                    <a href="kuis.html" class="group card-interactive bg-slate-50 hover:bg-white rounded-3xl p-8 border border-slate-200/80 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
+                        <div>
+                            <!-- Icon -->
+                            <div class="w-16 h-16 rounded-2xl bg-blue-100 text-brand-blue flex items-center justify-center text-3xl mb-6 group-hover:bg-brand-blue group-hover:text-white transition-colors duration-300 shadow-sm">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </div>
+                            <!-- Title -->
+                            <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-blue transition-colors">
+                                Kuis Interaktif
+                            </h3>
+                            <!-- Description -->
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                Uji pemahaman Anda melalui pilihan ganda dan soal uraian seputar sistem komputer.
+                            </p>
+                        </div>
+                        <!-- Button Link Text -->
+                        <div class="flex items-center text-sm font-bold text-brand-blue group-hover:translate-x-1 transition-transform">
+                            <span>Mulai Kuis</span>
+                            <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                        </div>
+                    </a>
+
+                    <!-- Card 3: Kamera AR -->
+                    <a href="kameraar.html" class="group card-interactive bg-slate-50 hover:bg-white rounded-3xl p-8 border border-slate-200/80 flex flex-col justify-between relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
+                        <div>
+                            <!-- Icon -->
+                            <div class="w-16 h-16 rounded-2xl bg-cyan-100 text-brand-cyan flex items-center justify-center text-3xl mb-6 group-hover:bg-brand-cyan group-hover:text-white transition-colors duration-300 shadow-sm">
+                                <i class="fa-solid fa-camera-rotate"></i>
+                            </div>
+                            <!-- Title -->
+                            <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-cyan transition-colors">
+                                Kamera AR
+                            </h3>
+                            <!-- Description -->
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                                Jelajahi pengalaman belajar berbasis Augmented Reality untuk mengenal objek komputer secara lebih menarik.
+                            </p>
+                        </div>
+                        <!-- Button Link Text -->
+                        <div class="flex items-center text-sm font-bold text-brand-cyan group-hover:translate-x-1 transition-transform">
+                            <span>Buka Kamera AR</span>
+                            <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- D. SECTION PENGENALAN SINGKAT -->
+        <section class="py-16 lg:py-24 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-brand-blue font-bold text-sm tracking-wider uppercase mb-2 block">Ringkasan Pembelajaran</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">
+                        Apa yang Akan Kamu Pelajari?
+                    </h2>
+                    <div class="w-20 h-1.5 bg-gradient-to-r from-brand-blue to-brand-cyan mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Point 1: Hardware -->
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-blue-50 text-brand-blue flex items-center justify-center text-2xl mb-6">
+                            <i class="fa-solid fa-hard-drive"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">1. Hardware (Perangkat Keras)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Mengenal perangkat keras komputer yang bisa dilihat dan disentuh secara fisik, seperti keyboard, mouse, monitor, processor, dan media penyimpanan (storage).
+                        </p>
+                    </div>
+
+                    <!-- Point 2: Software -->
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-purple-50 text-brand-purple flex items-center justify-center text-2xl mb-6">
+                            <i class="fa-solid fa-window-restore"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">2. Software (Perangkat Lunak)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Mengenal perangkat lunak atau program yang memberikan instruksi pada komputer, seperti Sistem Operasi (Windows, Linux) dan Aplikasi pembelajaran.
+                        </p>
+                    </div>
+
+                    <!-- Point 3: Brainware -->
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-xl bg-cyan-50 text-brand-cyan flex items-center justify-center text-2xl mb-6">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">3. Brainware (Pengguna)</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Memahami peran manusia sebagai pengoperasi komputer, mulai dari pengguna biasa (user), programmer, hingga administrator sistem.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- E. SECTION AJAKAN BELAJAR -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto bg-gradient-to-r from-brand-blue via-brand-purple to-brand-darkblue rounded-3xl p-8 sm:p-12 lg:p-16 text-center text-white relative overflow-hidden shadow-2xl">
+                <!-- Background Decorative Circles -->
+                <div class="absolute -top-12 -left-12 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
+                <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-white/10 rounded-full blur-xl"></div>
+
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <!-- Icon -->
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-md text-white text-3xl mb-6">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+
+                    <!-- Headline -->
+                    <h2 class="text-3xl sm:text-4xl font-extrabold mb-4 leading-tight">
+                        Siap Menjadi Penjelajah Teknologi?
+                    </h2>
+
+                    <!-- Subtitle -->
+                    <p class="text-blue-100 text-base sm:text-lg mb-8 max-w-2xl mx-auto">
+                        Mulai perjalanan belajarmu dan temukan bagaimana sistem komputer membantu kita dalam kehidupan sehari-hari.
+                    </p>
+
+                    <!-- CTA Button -->
+                    <a href="materi.html" class="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-white text-brand-blue font-bold text-base shadow-xl hover:bg-slate-100 hover:scale-105 active:scale-95 transition-all group">
+                        <span>Mulai Belajar Sekarang</span>
+                        <i class="fa-solid fa-circle-arrow-right ml-3 text-lg group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+  
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // Set dynamic current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Hamburger Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            if (isOpen) {
+                mobileMenu.classList.add('hidden');
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            } else {
+                mobileMenu.classList.remove('hidden');
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-xmark');
+            }
+        });
+
+        // Navbar shadow transition on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>

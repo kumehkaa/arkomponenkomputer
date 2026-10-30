@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Informatika Kelas IX - Sistem Komputer</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #7c3aed;
+            --bg-body: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --accent: #22c55e;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Card System */
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            margin-bottom: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* Identity Form */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+        }
+
+        /* Rules Info */
+        .info-box {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            font-size: 0.88rem;
+            color: #1e40af;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        /* Sticky Progress Bar */
+        .sticky-progress {
+            position: sticky;
+            top: 15px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .progress-bar-bg {
+            flex-grow: 1;
+            height: 10px;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        /* Questions Styling */
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+
+        .question-header i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.92rem;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary);
+            background-color: #f8fafc;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+        }
+
+        .option-label.selected {
+            border-color: var(--primary);
+            background-color: 
+            
+        }
+
+        /* Essay Box */
+        textarea.essay-input {
+            width: 100%;
+            height: 110px;
+            padding: 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.92rem;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        textarea.essay-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            text-align: center;
+        }
+
+        .btn:hover {
+            opacity: 0.95;
+        }
+
+        .btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Modal Confirmation */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-cancel {
+            background: #e5e7eb;
+            color: var(--text-main);
+        }
+
+        .btn-cancel:hover {
+            background: #d1d5db;
+        }
+
+        /* Section Display Toggle */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Thank You Screen */
+        .thank-you-box {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .thank-you-box i {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .alert-error {
+            background-color: #fef2f2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.88rem;
+            display: none;
+        }
+
+        .unanswered-highlight {
+            border: 2px solid var(--danger) !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <header>
+        <h1><i class="fa-solid fa-laptop-code"></i> KUIS INFORMATIKA KELAS IX</h1>
+        <p>Materi: Sistem Komputer & Komponen Utama Komputer</p>
+    </header>
+
+    <!-- Alert Box Error -->
+    <div id="alertBox" class="alert-error"></div>
+
+    <!-- START SCREEN -->
+    <div id="startScreen" class="card">
+        <h2 style="font-size: 1.2rem; margin-bottom: 10px;"><i class="fa-solid fa-address-card"></i> Identitas Peserta Ujian</h2>
+        <div class="info-box">
+            <strong><i class="fa-solid fa-circle-info"></i> Petunjuk Pengerjaan:</strong>
+            <ul>
+                <li>Kuis terdiri dari <strong>15 Pilihan Ganda</strong> dan <strong>5 Soal Uraian</strong>.</li>
+                <li>Seluruh soal <strong>wajib diisi</strong> sebelum dapat dikumpulkan.</li>
+                <li>Waktu pengerjaan bersifat mandiri. Pastikan jaringan internet stabil saat mengumpulkan.</li>
+            </ul>
+        </div>
+        
+        <form id="identityForm">
+            <div class="form-group">
+                <label for="namaSiswa">Nama Lengkap Siswa <span style="color:red">*</span></label>
+                <input type="text" id="namaSiswa" placeholder="Contoh: Ahmad Rizky" required>
+            </div>
+            <div class="form-group">
+                <label for="kelasSiswa">Kelas <span style="color:red">*</span></label>
+                <select id="kelasSiswa" required>
+                    <option value="">-- Pilih Kelas --</option>
+                   <option value="IX-A">Kelas IX-A</option>
+                    <option value="IX-B">Kelas IX-B</option>
+                    <option value="IX-C">Kelas IX-C</option>
+                    <option value="IX-D">Kelas IX-D</option>
+                    <option value="IX-E">Kelas IX-E</option>
+                    <option value="IX-F">Kelas IX-F</option>
+                    <option value="IX-G">Kelas IX-G</option>
+                    <option value="IX-H">Kelas IX-H</option>
+                </select>
+            </div>
+            <button type="button" class="btn" onclick="startQuiz()"><i class="fa-solid fa-play"></i> Mulai Kuis Sekarang</button>
+        </form>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="quizScreen" class="hidden">
+        
+        <!-- Sticky Progress -->
+        <div class="sticky-progress">
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">0 / 20 Terjawab</div>
+        </div>
+
+        <form id="quizForm">
+            <!-- SECTION 1: PILIHAN GANDA -->
+            <h2 style="margin-bottom: 15px; color: var(--primary);"><i class="fa-solid fa-list-check"></i> Bagian I: Pilihan Ganda (15 Soal)</h2>
+            <div id="pgContainer"></div>
+
+            <!-- SECTION 2: URAIAN -->
+            <h2 style="margin: 30px 0 15px 0; color: var(--secondary);"><i class="fa-solid fa-pen-to-square"></i> Bagian II: Uraian (5 Soal)</h2>
+            <div id="essayContainer"></div>
+
+            <button type="button" class="btn" style="margin-top: 20px;" onclick="validateAndConfirm()"><i class="fa-solid fa-paper-plane"></i> Kirim Jawaban Kuis</button>
+        </form>
+    </div>
+
+    <!-- THANK YOU SCREEN -->
+    <div id="thankYouScreen" class="card hidden thank-you-box">
+        <i class="fa-solid fa-circle-check"></i>
+        <h2>Terima Kasih!</h2>
+        <p style="margin-top: 10px; color: var(--text-muted);">Jawaban dan data pengerjaan kuis Anda telah berhasil tersimpan di sistem data Guru.</p>
+        <p style="margin-top: 5px; font-weight: 500;" id="userSummary"></p>
+        <div style="margin-top: 25px;">
+            <button class="btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i> Kembali ke Halaman Depan</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <i class="fa-solid fa-triangle-exclamation" style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 10px;"></i>
+        <h3>Konfirmasi Pengumpulan</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;">Apakah Anda yakin ingin menyelesaikan kuis ini? Jawaban tidak dapat diubah setelah dikirim.</p>
+        <div class="modal-buttons">
+            <button class="btn btn-cancel" onclick="closeModal()">Periksa Lagi</button>
+            <button class="btn" id="btnSubmitFinal" onclick="submitAnswers()">Ya, Kirim Sekarang</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* ==========================================================================
+       KONFIGURASI PENTING
+       ========================================================================== */
+    // GANTI URL DI BAWAH INI DENGAN URL DEPLOYMENT GOOGLE APPS SCRIPT WEB APP ANDA!
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjNl_W6rjoz3ToLjO35slMtIcdWtnDJfoOGnP7aAr32c3eijRoh8YJz4m3zAlf2nE4/exec";
+
+    /* DATA SOAL PILIHAN GANDA */
+    const pgQuestions = [
+        {
+            id: 1,
+            icon: "fa-desktop",
+            q: "Komponen dasar sistem komputer yang merujuk pada fisik perangkat lunak, perangkat keras, dan pengguna secara berurutan dikenal dengan istilah...",
+            options: ["A. Hardware, Software, Brainware", "B. Software, Hardware, Brainware", "C. Hardware, Brainware, Software", "D. Brainware, Software, Hardware"]
+        },
+        {
+            id: 2,
+            icon: "fa-microchip",
+            q: "Komponen CPU yang berfungsi sebagai pusat pengendali seluruh operasi komputer dan mengatur lalu lintas data adalah...",
+            options: ["A. Arithmetic Logic Unit (ALU)", "B. Control Unit (CU)", "C. Register", "D. RAM"]
+        },
+        {
+            id: 3,
+            icon: "fa-calculator",
+            q: "Bagian CPU yang bertugas khusus melakukan operasi aritmatika (seperti penjumlahan dan pengurangan) serta logika adalah...",
+            options: ["A. Control Unit", "B. Register Memory", "C. Arithmetic Logic Unit (ALU)", "D. Bus System"]
+        },
+        {
+            id: 4,
+            icon: "fa-memory",
+            q: "Memori utama komputer yang bersifat volatile (data terhapus saat listrik mati) adalah...",
+            options: ["A. ROM", "B. Hard Disk Drive", "C. RAM", "D. Flashdisk"]
+        },
+        {
+            id: 5,
+            icon: "fa-floppy-disk",
+            q: "Memori komputer yang bersifat non-volatile dan berisi instruksi awal booting (BIOS/UEFI) dari pabrik adalah...",
+            options: ["A. RAM", "B. Cache Memory", "C. Virtual Memory", "D. ROM"]
+        },
+        {
+            id: 6,
+            icon: "fa-hard-drive",
+            q: "Media penyimpanan sekunder yang menggunakan teknologi flash memory tanpa piringan berputar sehingga kecepatannya jauh melebihi HDD biasa adalah...",
+            options: ["A. Solid State Drive (SSD)", "B. DVD-ROM", "C. Magnetic Tape", "D. Floppy Disk"]
+        },
+        {
+            id: 7,
+            icon: "fa-keyboard",
+            q: "Di bawah ini yang seluruhnya termasuk dalam kategori perangkat keras input (Input Device) adalah...",
+            options: ["A. Mouse, Keyboard, Scanner", "B. Monitor, Printer, Speaker", "C. CPU, RAM, Hard Disk", "D. Keyboard, Monitor, Projector"]
+        },
+        {
+            id: 8,
+            icon: "fa-print",
+            q: "Manakah dari perangkat keras berikut yang berfungsi sebagai perangkat keluaran (Output Device)?",
+            options: ["A. Microphone", "B. Web Camera", "C. Plotter", "D. Barcode Reader"]
+        },
+        {
+            id: 9,
+            icon: "fa-chess-board",
+            q: "Papan sirkuit cetak utama yang menjadi tempat terhubungnya seluruh komponen komputer seperti CPU, RAM, dan kartu ekspansi dinamakan...",
+            options: ["A. Power Supply", "B. Motherboard", "C. Casing", "D. Graphics Card"]
+        },
+        {
+            id: 10,
+            icon: "fa-bolt",
+            q: "Perangkat keras yang bertugas mengonversi arus AC dari sakelar listrik menjadi arus DC untuk menyuplai daya ke komponen komputer adalah...",
+            options: ["A. Adaptor USB", "B. UPS", "C. Power Supply Unit (PSU)", "D. Regulator Voltage"]
+        },
+        {
+            id: 11,
+            icon: "fa-gamepad",
+            q: "Komponen komputer yang bertanggung jawab secara khusus untuk mengolah data grafis dan menampilkannya ke layar monitor adalah...",
+            options: ["A. Sound Card", "B. Network Interface Card", "C. GPU / VGA Card", "D. Storage Controller"]
+        },
+        {
+            id: 12,
+            icon: "fa-diagram-project",
+            q: "Alur kerja sistem komputer yang benar dalam mengolah informasi adalah...",
+            options: ["A. Process -> Input -> Output", "B. Input -> Process -> Output", "C. Output -> Process -> Input", "D. Input -> Output -> Process"]
+        },
+        {
+            id: 13,
+            icon: "fa-user-gear",
+            q: "Seseorang yang bertugas membuat program atau aplikasi yang berjalan pada sistem komputer dinamakan...",
+            options: ["A. System Administrator", "B. Operator Computer", "C. Programmer", "D. Data Entry"]
+        },
+        {
+            id: 14,
+            icon: "fa-sliders",
+            q: "Perangkat lunak yang berfungsi sebagai jembatan pengendali utama antara hardware komputer dan aplikasi pengguna adalah...",
+            options: ["A. Operating System (Sistem Operasi)", "B. Application Software", "C. Utility Software", "D. Antivirus"]
+        },
+        {
+            id: 15,
+            icon: "fa-plug",
+            q: "Saat pengguna mengetik tombol pada keyboard, instruksi tersebut diproses oleh komputer dan tampil di layar. Peran monitor dalam hal ini adalah...",
+            options: ["A. Perangkat Pemrosesan", "B. Perangkat Masukan", "C. Perangkat Keluaran", "D. Perangkat Penyimpanan"]
+        }
+    ];
+
+    /* DATA SOAL URAIAN */
+    const essayQuestions = [
+        {
+            id: 1,
+            icon: "fa-network-wired",
+            q: "Jelaskan perbedaan mendasar antara Hardware, Software, dan Brainware, serta berikan contoh hubungan keterikatan ketiganya dalam pengoperasian komputer!"
+        },
+        {
+            id: 2,
+            icon: "fa-bolt-lightning",
+            q: "Jelaskan secara singkat perbedaan karakteristik mendasar antara RAM dan ROM pada sistem komputer!"
+        },
+        {
+            id: 3,
+            icon: "fa-gauge-high",
+            q: "Mengapa penggunaan SSD (Solid State Drive) saat ini lebih disarankan daripada HDD (Hard Disk Drive) konvensional untuk menginstal Sistem Operasi? Jelaskan alasannya!"
+        },
+        {
+            id: 4,
+            icon: "fa-microchip",
+            q: "Sebutkan dua komponen utama di dalam CPU (Central Processing Unit) dan jelaskan fungsi masing-masing komponen tersebut!"
+        },
+        {
+            id: 5,
+            icon: "fa-recycle",
+            q: "Jelaskan bagaimana siklus kerja komputer berjalan mulai dari tahap Input, Process, hingga Output beserta contoh kasus saat kamu mencetak dokumen!"
+        }
+    ];
+
+    let studentData = { nama: "", kelas: "" };
+
+    // Render Soal saat Halaman Dimuat
+    window.onload = () => {
+        renderPG();
+        renderEssay();
+    };
+
+    function renderPG() {
+        const container = document.getElementById('pgContainer');
+        container.innerHTML = pgQuestions.map((q, idx) => `
+            <div class="card" id="card-pg-${q.id}">
+                <div class="question-header">
+                    <i class="fa-solid ${q.icon}"></i>
+                    <div>Soal PG ${idx + 1}. ${q.q}</div>
+                </div>
+                <div class="options-grid">
+                    ${q.options.map((opt, optIdx) => {
+                        const val = ["A","B","C","D"][optIdx];
+                        return `
+                            <label class="option-label" onclick="selectOption(this, 'pg_${q.id}')">
+                                <input type="radio" name="pg_${q.id}" value="${val}" onchange="updateProgress()">
+                                ${opt}
+                            </label>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderEssay() {
+        const container = document.getElementById('essayContainer');
+        container.innerHTML = essayQuestions.map((q, idx) => `
+            <div class="card" id="card-essay-${q.id}">
+                <div class="question-header">
+                    <i class="fa-solid ${q.icon}"></i>
+                    <div>Soal Uraian ${idx + 1}. ${q.q}</div>
+                </div>
+                <textarea class="essay-input" name="essay_${q.id}" id="essay_${q.id}" placeholder="Ketikkan jawaban lengkap Anda di sini..." oninput="updateProgress()"></textarea>
+            </div>
+        `).join('');
+    }
+
+    function selectOption(labelElement, inputName) {
+        const labels = document.querySelectorAll(`input[name="${inputName}"]`);
+        labels.forEach(input => input.parentElement.classList.remove('selected'));
+        labelElement.classList.add('selected');
+    }
+
+    function startQuiz() {
+        const nama = document.getElementById('namaSiswa').value.trim();
+        const kelas = document.getElementById('kelasSiswa').value;
+
+        if (!nama || !kelas) {
+            showAlert("Harap isi Nama Lengkap dan Pilih Kelas terlebih dahulu!");
+            return;
+        }
+
+        studentData.nama = nama;
+        studentData.kelas = kelas;
+
+        document.getElementById('startScreen').classList.add('hidden');
+        document.getElementById('quizScreen').classList.remove('hidden');
+        document.getElementById('alertBox').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateProgress() {
+        let answeredCount = 0;
+        
+        // Cek PG
+        pgQuestions.forEach(q => {
+            if (document.querySelector(`input[name="pg_${q.id}"]:checked`)) answeredCount++;
+        });
+
+        // Cek Uraian
+        essayQuestions.forEach(q => {
+            const val = document.getElementById(`essay_${q.id}`).value.trim();
+            if (val.length > 0) answeredCount++;
+        });
+
+        const total = pgQuestions.length + essayQuestions.length;
+        const percentage = Math.round((answeredCount / total) * 100);
+
+        document.getElementById('progressBar').style.width = percentage + '%';
+        document.getElementById('progressText').innerText = `${answeredCount} / ${total} Terjawab`;
+    }
+
+    function validateAndConfirm() {
+        let firstUnanswered = null;
+
+        // Reset highlight
+        document.querySelectorAll('.card').forEach(c => c.classList.remove('unanswered-highlight'));
+
+        // Cek PG
+        for (let q of pgQuestions) {
+            if (!document.querySelector(`input[name="pg_${q.id}"]:checked`)) {
+                const card = document.getElementById(`card-pg-${q.id}`);
+                card.classList.add('unanswered-highlight');
+                if (!firstUnanswered) firstUnanswered = card;
+            }
+        }
+
+        // Cek Uraian
+        for (let q of essayQuestions) {
+            const val = document.getElementById(`essay_${q.id}`).value.trim();
+            if (!val) {
+                const card = document.getElementById(`card-essay-${q.id}`);
+                card.classList.add('unanswered-highlight');
+                if (!firstUnanswered) firstUnanswered = card;
+            }
+        }
+
+        if (firstUnanswered) {
+            showAlert("Masih ada soal yang belum dijawab! Periksa kotak yang berwarna merah.");
+            firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        document.getElementById('alertBox').style.display = 'none';
+        document.getElementById('confirmModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('confirmModal').style.display = 'none';
+    }
+
+    function showAlert(msg) {
+        const box = document.getElementById('alertBox');
+        box.innerText = msg;
+        box.style.display = 'block';
+    }
+
+    async function submitAnswers() {
+        const btnSubmit = document.getElementById('btnSubmitFinal');
+        btnSubmit.disabled = true;
+        btnSubmit.innerText = "Mengirim...";
+
+        // Kumpulkan Data Payload
+        const payload = {
+            nama: studentData.nama,
+            kelas: studentData.kelas,
+            pg: {},
+            essay: {}
+        };
+
+        pgQuestions.forEach(q => {
+            const selected = document.querySelector(`input[name="pg_${q.id}"]:checked`);
+            payload.pg[`pg_${q.id}`] = selected ? selected.value : "";
+        });
+
+        essayQuestions.forEach(q => {
+            payload.essay[`essay_${q.id}`] = document.getElementById(`essay_${q.id}`).value.trim();
+        });
+
+        try {
+            // Pengiriman via fetch API (POST JSON)
+            const response = await fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Menghindari CORS Preflight Trigger
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (result.status === "success") {
+                closeModal();
+                document.getElementById('quizScreen').classList.add('hidden');
+                document.getElementById('thankYouScreen').classList.remove('hidden');
+                document.getElementById('userSummary').innerText = `Nama: ${studentData.nama} (${studentData.kelas}) | ID Pengiriman: ${result.submissionId}`;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                throw new Error(result.message || "Gagal menyimpan jawaban.");
+            }
+        } catch (err) {
+            console.error("Submission error:", err);
+            alert("Terjadi kesalahan jaringan/server saat mengirim jawaban: " + err.message + "\nSilakan coba klik tombol kirim lagi.");
+            btnSubmit.disabled = false;
+            btnSubmit.innerText = "Ya, Kirim Sekarang";
+        }
+    }
+</script>
+
+</body>
+</html>

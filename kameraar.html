@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Augmented Reality - Komponen Sistem Komputer</title>
+
+    <!-- Tailwind CSS untuk styling modern dan responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Inter untuk tipografi yang bersih -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Mengatur font global dan warna latar belakang */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        /* Mengatur tampilan model-viewer secara khusus */
+        model-viewer {
+            width: 100%;
+            height: 60vh;
+            --poster-color: #f3f4f6;
+            transition: opacity 0.5s ease-in-out;
+            background-color: #f8fafc;
+        }
+        /* Menyesuaikan tampilan tombol AR */
+        .ar-button {
+            background-color: #0077b6;
+            color: #ffffff;
+            border-radius: 9999px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: background-color 0.3s ease;
+        }
+        .ar-button:hover {
+            background-color: #023e8a;
+        }
+        /* Gaya untuk tombol model */
+        .model-button {
+            background-color: #e5e7eb;
+            color: #374151;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .model-button:hover {
+            background-color: #d1d5db;
+        }
+        .model-button.active {
+            background-color: #0077b6;
+            color: #ffffff;
+        }
+        /* Loading overlay */
+        #loading-overlay {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.8);
+            z-index: 10;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0077b6;
+        }
+    </style>
+
+    <!-- Mengimpor komponen model-viewer.js -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen text-gray-800">
+
+    <div class="flex-grow flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full">
+            <div class="p-8 md:p-12">
+                <h1 id="model-title" class="text-3xl md:text-4xl font-bold text-center mb-2 text-gray-900 uppercase">Jelajahi Komponen Komputer</h1>
+                <p id="model-subtitle" class="text-center text-gray-500 mb-8">Pilih komponen komputer di bawah ini untuk mengenal bentuk dan fungsinya dalam bentuk 3D.</p>
+
+                <!-- Container untuk Model Viewer -->
+                <div class="relative rounded-2xl border border-gray-200 overflow-hidden">
+                    <div id="loading-overlay text-center">Memuat Model...</div>
+                    <model-viewer
+                        id="ar-model-viewer"
+                        src="" 
+                        ios-src=""
+                        alt="Model 3D komponen sistem komputer"
+                        shadow-intensity="1"
+                        camera-controls
+                        auto-rotate
+                        ar
+                        ar-modes="webxr scene-viewer quick-look"
+                    >
+                        <button slot="ar-button" class="ar-button">
+                            Lihat di Ruangan Anda (AR)
+                        </button>
+                    </model-viewer>
+                </div>
+
+                <!-- Kontainer untuk tombol-tombol model -->
+                <div id="button-container" class="flex flex-wrap justify-center gap-4 mt-8">
+                    <!-- Tombol-tombol dibuat secara dinamis -->
+                </div>
+            </div>
+            
+            <div class="bg-blue-50 p-6 text-center text-sm text-gray-600 border-t border-gray-200">
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data model komponen sistem komputer
+ const models = [
+    { 
+        name: 'Keyboard', 
+        glb_src: 'aset/keyboard.glb', 
+        usdz_src: '',
+        desc: 'Keyboard adalah perangkat keras masukan (input device) yang digunakan untuk memasukkan huruf, angka, simbol, dan perintah ke dalam komputer melalui tombol-tombol yang tersedia.'
+    },
+    { 
+        name: 'Mouse', 
+        glb_src: 'aset/mouse.glb', 
+        usdz_src: '',
+        desc: 'Mouse adalah perangkat keras masukan yang digunakan untuk menggerakkan penunjuk pada layar, memilih objek, mengeklik ikon, dan menjalankan berbagai perintah pada komputer.'
+    },
+    { 
+        name: 'Monitor', 
+        glb_src: 'aset/monitor.glb', 
+        usdz_src: '',
+        desc: 'Monitor adalah perangkat keras keluaran (output device) yang menampilkan hasil pemrosesan komputer dalam bentuk teks, gambar, video, dan informasi lainnya.'
+    },
+    { 
+        name: 'Processor (CPU)', 
+        glb_src: 'aset/cpu.glb', 
+        usdz_src: '',
+        desc: 'Processor atau CPU merupakan komponen pemrosesan yang menjalankan instruksi dan mengolah data. Processor berperan penting dalam mengatur pelaksanaan berbagai tugas pada komputer.'
+    },
+    { 
+        name: 'Motherboard', 
+        glb_src: 'aset/motherboard.glb', 
+        usdz_src: '',
+        desc: 'Motherboard adalah papan utama pada komputer yang menjadi tempat terhubungnya berbagai komponen, seperti processor, RAM, dan perangkat lainnya, sehingga dapat bekerja bersama sebagai satu sistem.'
+    },
+    { 
+        name: 'RAM', 
+        glb_src: 'aset/ram.glb', 
+        usdz_src: '',
+        desc: 'RAM (Random Access Memory) merupakan memori yang menyimpan sementara data dan instruksi yang sedang digunakan komputer. Data di dalam RAM umumnya tidak tersimpan ketika daya komputer dimatikan.'
+    },
+    { 
+        name: 'Hard Disk (HDD)', 
+        glb_src: 'aset/hdd.glb', 
+        usdz_src: '',
+        desc: 'HDD (Hard Disk Drive) adalah perangkat penyimpanan yang digunakan untuk menyimpan sistem operasi, aplikasi, dokumen, gambar, video, dan berbagai data digital menggunakan piringan magnetik.'
+    },
+    { 
+        name: 'SSD', 
+        glb_src: 'aset/sdd.glb', 
+        usdz_src: '',
+        desc: 'SSD (Solid State Drive) adalah perangkat penyimpanan yang menggunakan memori flash untuk menyimpan data. SSD umumnya memiliki kecepatan akses data yang lebih tinggi dibandingkan HDD.'
+    },
+    { 
+        name: 'Printer', 
+        glb_src: 'aset/printer.glb', 
+        usdz_src: '',
+        desc: 'Printer adalah perangkat keras keluaran yang digunakan untuk mencetak dokumen, teks, atau gambar dari komputer ke media fisik, seperti kertas.'
+    },
+    { 
+        name: 'Speaker', 
+        glb_src: 'aset/speaker.glb', 
+        usdz_src: '',
+        desc: 'Speaker adalah perangkat keras keluaran yang menghasilkan suara dari komputer, misalnya suara musik, video, notifikasi, dan hasil pemutaran audio.'
+    }
+];
+        const modelViewer = document.getElementById('ar-model-viewer');
+        const buttonContainer = document.getElementById('button-container');
+        const modelTitle = document.getElementById('model-title');
+        const modelSubtitle = document.getElementById('model-subtitle');
+        
+        function switchModel(model) {
+            // Validasi file path sederhana untuk mencegah error parsing URL kosong
+            if (!model.glb_src) return;
+
+            modelViewer.style.opacity = '0.3';
+
+            // Menggunakan properti src secara langsung
+            modelViewer.setAttribute('src', model.glb_src);
+            modelViewer.setAttribute('ios-src', model.usdz_src);
+            modelViewer.setAttribute('alt', `Model 3D ${model.name}`);
+            
+            modelTitle.textContent = model.name;
+            modelSubtitle.textContent = model.desc;
+
+            modelViewer.style.opacity = '1';
+
+            // Update status tombol aktif
+            const buttons = buttonContainer.querySelectorAll('.model-button');
+            buttons.forEach(button => {
+                button.classList.toggle('active', button.textContent === model.name);
+            });
+        }
+
+        function createModelButtons() {
+            buttonContainer.innerHTML = '';
+            models.forEach((model, index) => {
+                const button = document.createElement('button');
+                button.textContent = model.name;
+                button.className = 'model-button';
+
+                if (index === 0) {
+                    button.classList.add('active');
+                    // Set model awal tanpa animasi untuk mencegah error sinkronisasi
+                    modelViewer.src = model.glb_src;
+                    modelViewer.iosSrc = model.usdz_src;
+                    modelTitle.textContent = model.name;
+                    modelSubtitle.textContent = model.desc;
+                }
+
+                button.addEventListener('click', () => switchModel(model));
+                buttonContainer.appendChild(button);
+            });
+        }
+
+        // Pastikan inisialisasi berjalan setelah DOM siap
+        window.addEventListener('load', () => {
+            createModelButtons();
+        });
+    </script>
+
+</body>
+</html>

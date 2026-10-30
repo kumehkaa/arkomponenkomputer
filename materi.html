@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materi Sistem Komputer - Ainun Najila</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#2563EB',
+                            darkblue: '#1E40AF',
+                            purple: '#7C3AED',
+                            cyan: '#06B6D4',
+                            lightbg: '#F8FAFC',
+                            accent: '#38BDF8'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8FAFC;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Navigation */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Card Interactive Hover Effects */
+        .card-interactive {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-interactive:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.1), 0 8px 10px -6px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Image Box Formatting & Fallback Styling */
+        .img-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            background-color: #F1F5F9;
+            border-radius: 1rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #CBD5E1;
+        }
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        .img-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Image Placeholder Fallback styling when src is empty or invalid */
+        .img-placeholder-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #64748B;
+            padding: 1rem;
+            font-size: 0.825rem;
+            font-weight: 500;
+        }
+
+        /* Scroll Animations */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body id="top" class="text-slate-800 antialiased selection:bg-brand-cyan selection:text-white">
+
+    <!-- NAVBAR SECTION -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-slate-200/80 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Web Name -->
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-blue to-brand-purple flex items-center justify-center text-white text-2xl shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform duration-300">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-brand-blue via-brand-purple to-brand-cyan bg-clip-text text-transparent block leading-tight">
+                            Ainun Najila
+                        </span>
+                        <span class="text-xs text-slate-500 font-medium tracking-wide block">
+                            Informatika Kelas IX SMP
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+                    <a href="index.html" class="px-4 py-2 rounded-xl text-sm font-medium text-slate-600 hover:text-brand-blue hover:bg-slate-50 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-house text-xs text-slate-400"></i> Beranda
+                    </a>
+                   
+                    <!-- Active State for Materi -->
+                    <a href="materi.html" class="px-4 py-2 rounded-xl text-sm font-bold bg-blue-50 text-brand-blue border border-blue-200/60 shadow-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-microchip text-xs"></i> Materi
+                    </a>
+                    <a href="kameraar.html" class="ml-2 px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-brand-purple to-brand-cyan text-white shadow-md shadow-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-camera-rotate"></i> Kamera AR
+                    </a>
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="mobile-menu-btn" type="button" class="md:hidden p-2.5 rounded-xl text-slate-600 hover:text-brand-blue hover:bg-slate-100 transition-colors focus:outline-none" aria-label="Buka Menu Navigasi">
+                    <i id="hamburger-icon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 shadow-xl">
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 font-medium text-sm">
+                <i class="fa-solid fa-house w-5 text-center text-slate-400"></i> Beranda
+            </a>
+            
+            <a href="materi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-brand-blue font-bold text-sm">
+                <i class="fa-solid fa-microchip w-5 text-center text-brand-blue"></i> Materi (Aktif)
+            </a>
+            <a href="kameraar.html" class="flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-brand-purple to-brand-cyan text-white font-semibold text-sm shadow-md mt-2">
+                <i class="fa-solid fa-camera-rotate"></i> Kamera AR
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-24 lg:pt-28 pb-16">
+        
+        <!-- HEADER MATERI SECTION -->
+        <section class="py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-3xl p-8 sm:p-10 lg:p-12 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                    <div class="lg:col-span-8 text-center lg:text-left">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-wider mb-4 border border-white/20">
+                            <i class="fa-solid fa-book-open"></i> Modul Informatika Kelas IX
+                        </span>
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4">
+                            Materi Sistem Komputer
+                        </h1>
+                        <p class="text-blue-100 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                            Yuk, kenali bagian-bagian sistem komputer, pahami fungsi setiap komponennya, dan pelajari bagaimana komputer mengolah data menjadi informasi!
+                        </p>
+                    </div>
+                    
+                    <!-- Header Image Slot -->
+                    <div class="lg:col-span-4 flex justify-center">
+                        <div class="w-full max-w-xs bg-white/10 p-3 rounded-2xl backdrop-blur-md border border-white/20 shadow-inner">
+                            <div class="img-container h-48 bg-white/20 border-white/30">
+                                <!-- PLACEHOLDER GAMBAR HEADER SISTEM KOMPUTER -->
+                                <!-- Silakan ganti nilai atribut src di bawah ini dengan URL gambar Anda -->
+                                <img src="https://uici.ac.id/wp-content/uploads/2024/02/IMG_3731.jpeg" alt="Ilustrasi sistem komputer" onerror="handleImageError(this, 'fa-laptop-code', 'Ilustrasi Sistem Komputer');">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DAFTAR ISI MATERI -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80">
+                <h2 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-list-ul text-brand-blue"></i> Daftar Isi Materi
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                    <a href="#pengertian" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
+                        <span class="w-6 h-6 rounded-lg bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-bold">1</span>
+                        <span>Pengertian Sistem Komputer</span>
+                    </a>
+                    <a href="#komponen-utama" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
+                        <span class="w-6 h-6 rounded-lg bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-bold">2</span>
+                        <span>Komponen Utama</span>
+                    </a>
+                    <a href="#hardware" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
+                        <span class="w-6 h-6 rounded-lg bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-bold">3</span>
+                        <span>Perangkat Keras (Hardware)</span>
+                    </a>
+                    <a href="#software" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
+                        <span class="w-6 h-6 rounded-lg bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-bold">4</span>
+                        <span>Perangkat Lunak (Software)</span>
+                    </a>
+                    <a href="#brainware" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
+                        <span class="w-6 h-6 rounded-lg bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-bold">5</span>
+                        <span>Pengguna (Brainware)</span>
+                    </a>
+                    <a href="#alur-kerja" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
+                        <span class="w-6 h-6 rounded-lg bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-bold">6</span>
+                        <span>Alur Kerja Komputer</span>
+                    </a>
+                    <a href="#rangkuman" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100 col-span-1 sm:col-span-2 lg:col-span-2">
+                        <span class="w-6 h-6 rounded-lg bg-purple-100 text-brand-purple text-xs flex items-center justify-center font-bold">7</span>
+                        <span>Rangkuman Materi</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTAINER UNTUK SELURUH BAB MATERI -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+
+            <!-- MATERI 1 — PENGERTIAN SISTEM KOMPUTER -->
+            <section id="pengertian" class="reveal-on-scroll bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+                <div class="max-w-3xl mb-8">
+                    <span class="text-xs font-bold text-brand-blue uppercase tracking-wider block mb-1">Materi 01</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">Apa Itu Sistem Komputer?</h2>
+                    <p class="text-slate-600 text-base leading-relaxed">
+                        Sistem Komputer adalah kumpulan elemen-elemen atau komponen-komponen terintegrasi yang saling terhubung dan bekerja sama untuk menerima masukan (<i class="text-slate-800 font-semibold">input</i>), mengolah data (<i class="text-slate-800 font-semibold">process</i>), menyimpan data (<i class="text-slate-800 font-semibold">storage</i>), serta menghasilkan informasi (<i class="text-slate-800 font-semibold">output</i>).
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-5 rounded-2xl bg-blue-50/50 border border-blue-100">
+                        <div class="w-12 h-12 rounded-xl bg-brand-blue text-white flex items-center justify-center text-xl mb-4 shadow-md shadow-blue-500/20">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Hardware</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">Perangkat fisik komputer yang tampak secara nyata dan dapat disentuh langsung oleh tangan.</p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-purple-50/50 border border-purple-100">
+                        <div class="w-12 h-12 rounded-xl bg-brand-purple text-white flex items-center justify-center text-xl mb-4 shadow-md shadow-purple-500/20">
+                            <i class="fa-solid fa-window-restore"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Software</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">Program dan instruksi digital yang memberikan arahan agar hardware dapat menjalankan fungsinya.</p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-cyan-50/50 border border-cyan-100">
+                        <div class="w-12 h-12 rounded-xl bg-brand-cyan text-white flex items-center justify-center text-xl mb-4 shadow-md shadow-cyan-500/20">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Brainware</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">Manusia yang mengoperasikan, mengendalikan, dan mengelola seluruh sistem komputer.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MATERI 2 — TIGA KOMPONEN UTAMA SISTEM KOMPUTER -->
+            <section id="komponen-utama" class="reveal-on-scroll">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="text-xs font-bold text-brand-purple uppercase tracking-wider block mb-1">Materi 02</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Tiga Komponen Utama Sistem Komputer</h2>
+                    <p class="text-slate-600 text-sm mt-2">Ketiga komponen ini harus ada agar sistem komputer dapat bekerja secara sempurna.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Kartu Hardware -->
+                    <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm card-interactive flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 rounded-xl bg-blue-100 text-brand-blue flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-hard-drive"></i></span>
+                                <h3 class="text-xl font-bold text-slate-900">A. Hardware</h3>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                                Hardware adalah bagian komputer yang memiliki bentuk fisik nyata sehingga dapat dilihat, dipegang, dan dipindahkan.
+                            </p>
+                            <div class="bg-slate-50 p-3 rounded-xl mb-4 border border-slate-100 text-xs text-slate-700">
+                                <span class="font-bold block text-slate-900 mb-1">Contoh Utama:</span>
+                                Keyboard, mouse, monitor, processor, RAM, dan media penyimpanan.
+                            </div>
+                        </div>
+                        <div class="img-container">
+                            <!-- PLACEHOLDER GAMBAR HARDWARE -->
+                            <img src="https://www.jetorbit.com/blog/wp-content/uploads/2021/07/Pengertian-Hardware-Fungsi-Jenis-dan-Contoh-Hardware.jpg" alt="Contoh perangkat keras komputer" onerror="handleImageError(this, 'fa-memory', 'Gambar Hardware');">
+                        </div>
+                    </div>
+
+                    <!-- Kartu Software -->
+                    <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm card-interactive flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 rounded-xl bg-purple-100 text-brand-purple flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-code"></i></span>
+                                <h3 class="text-xl font-bold text-slate-900">B. Software</h3>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                                Software adalah kumpulan program, aturan, dan instruksi digital yang digunakan untuk menjalankan tugas tertentu pada sistem komputer.
+                            </p>
+                            <div class="bg-slate-50 p-3 rounded-xl mb-4 border border-slate-100 text-xs text-slate-700">
+                                <span class="font-bold block text-slate-900 mb-1">Contoh Utama:</span>
+                                Windows, Linux, Microsoft Word, browser internet, dan Canva.
+                            </div>
+                        </div>
+                        <div class="img-container">
+                            <!-- PLACEHOLDER GAMBAR SOFTWARE -->
+                            <img src="https://eranyacloud.com/wp-content/uploads/2023/11/Pengertian-Software.jpg" alt="Contoh perangkat lunak komputer" onerror="handleImageError(this, 'fa-laptop-code', 'Gambar Software');">
+                        </div>
+                    </div>
+
+                    <!-- Kartu Brainware -->
+                    <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm card-interactive flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="w-10 h-10 rounded-xl bg-cyan-100 text-brand-cyan flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-users"></i></span>
+                                <h3 class="text-xl font-bold text-slate-900">C. Brainware</h3>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                                Brainware adalah manusia yang mengoperasikan, mengendalikan, dan memanfaatkan perangkat komputer secara bijak dan tepat.
+                            </p>
+                            <div class="bg-slate-50 p-3 rounded-xl mb-4 border border-slate-100 text-xs text-slate-700">
+                                <span class="font-bold block text-slate-900 mb-1">Contoh Utama:</span>
+                                Siswa, guru, programmer, analis data, dan teknisi jaringan.
+                            </div>
+                        </div>
+                        <div class="img-container">
+                            <!-- PLACEHOLDER GAMBAR BRAINWARE -->
+                            <img src="https://i.pinimg.com/736x/18/ff/a0/18ffa0c4b0c6344d53779e52bb08c858.jpg" alt="Pengguna komputer" onerror="handleImageError(this, 'fa-user-astronaut', 'Gambar Brainware');">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MATERI 3 — PERANGKAT KERAS (HARDWARE) -->
+            <section id="hardware" class="reveal-on-scroll space-y-8">
+                <div class="border-b border-slate-200 pb-4">
+                    <span class="text-xs font-bold text-brand-blue uppercase tracking-wider block mb-1">Materi 03</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Kelompok Perangkat Keras (Hardware)</h2>
+                    <p class="text-slate-600 text-sm mt-1">Hardware dibagi menjadi 4 kelompok utama berdasarkan tugas dan alur kerjanya.</p>
+                </div>
+
+                <!-- A. Input Device -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="px-3 py-1 rounded-lg bg-blue-100 text-brand-blue font-bold text-xs uppercase">Kelompok A</span>
+                        <h3 class="text-xl font-bold text-slate-900">Input Device (Perangkat Masukan)</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-6">
+                        Perangkat yang berfungsi untuk memasukkan data, teks, gambar, suara, atau perintah tertentu ke dalam sistem komputer.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Keyboard -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER KEYBOARD -->
+                                <img src="https://marketplace.canva.com/jmVAc/MAHBqbjmVAc/1/tl/canva-keyboard-mekanik-hitam-modern-di-atas-meja-kayu-MAHBqbjmVAc.jpg" alt="Keyboard" onerror="handleImageError(this, 'fa-keyboard', 'Keyboard');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Keyboard</h4>
+                            <p class="text-xs text-slate-500 mt-1">Memasukkan huruf, angka, karakter khusus, dan perintah ketikan.</p>
+                        </div>
+                        <!-- Mouse -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER MOUSE -->
+                                <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/A_computer_mouse%2C_black_and_white%2C_retouched%2C_keyboard_visible_in_background.jpg/250px-A_computer_mouse%2C_black_and_white%2C_retouched%2C_keyboard_visible_in_background.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail" alt="Mouse" onerror="handleImageError(this, 'fa-computer-mouse', 'Mouse');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Mouse</h4>
+                            <p class="text-xs text-slate-500 mt-1">Menggerakkan pointer kursor, memilih objek, dan melakukan klik.</p>
+                        </div>
+                        <!-- Scanner -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER SCANNER -->
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbYjzsxvvKkG-5wXIyQ0cyyyqPj5uP_74plJLs8c81oA&s=10" alt="Scanner" onerror="handleImageError(this, 'fa-print', 'Scanner');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Scanner</h4>
+                            <p class="text-xs text-slate-500 mt-1">Membaca fisik dokumen atau foto menjadi file bergambar digital.</p>
+                        </div>
+                        <!-- Microphone -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER MICROPHONE -->
+                                <img src="https://rexus.id/cdn/shop/files/XORA-II-BLACK_1.jpg?v=1724148903&width=1200" alt="Microphone" onerror="handleImageError(this, 'fa-microphone', 'Microphone');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Microphone</h4>
+                            <p class="text-xs text-slate-500 mt-1">Memasukkan dan merekam gelombang suara ke komputer.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- B. Processing Device -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="px-3 py-1 rounded-lg bg-purple-100 text-brand-purple font-bold text-xs uppercase">Kelompok B</span>
+                        <h3 class="text-xl font-bold text-slate-900">Processing Device (Perangkat Pemrosesan)</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-6">
+                        Perangkat inti yang bertugas mengolah, menghitung, dan memproses data yang diterima dari perangkat masukan.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <!-- Processor -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER PROCESSOR -->
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQONeMeTj-4n9s00U5Kqy-vI011REzs8yEQiz03I8uhR0RPWAc-lajZewUg&s=10" alt="Processor" onerror="handleImageError(this, 'fa-microchip', 'Processor (CPU)');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Processor (CPU)</h4>
+                            <p class="text-xs text-slate-500 mt-1">Otak utama komputer yang menjalankan seluruh instruksi sistem.</p>
+                        </div>
+                        <!-- Motherboard -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER MOTHERBOARD -->
+                                <img src="https://swalayankomputer.com/wp-content/uploads/2024/03/Pengertian-Motherboard-Fungsi-dan-Jenis-Jenisnya.jpg" alt="Motherboard" onerror="handleImageError(this, 'fa-circuit-board', 'Motherboard');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Motherboard</h4>
+                            <p class="text-xs text-slate-500 mt-1">Papan sirkuit utama yang menghubungkan seluruh komponen komputer.</p>
+                        </div>
+                        <!-- RAM -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER RAM -->
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjIFEtoT8dCoRzx9uQyPUS0cbKTgg-IRA-yEVr6sH9VSFzuJIetie5Ti0&s=10" alt="RAM" onerror="handleImageError(this, 'fa-memory', 'Memori RAM');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">RAM</h4>
+                            <p class="text-xs text-slate-500 mt-1">Tempat penyimpanan data sementara saat aplikasi sedang dijalankan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. Storage Device -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="px-3 py-1 rounded-lg bg-cyan-100 text-brand-cyan font-bold text-xs uppercase">Kelompok C</span>
+                        <h3 class="text-xl font-bold text-slate-900">Storage Device (Perangkat Penyimpanan)</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-6">
+                        Perangkat yang digunakan untuk menyimpan dokumen, file multimedia, dan sistem operasi secara permanen maupun sementara.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <!-- HDD -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER HDD -->
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlJg3VM9R5gl42_2iHrOcAh_OATvfu0ZH_M5mm3dTSw&s=10" alt="Hard Disk Drive" onerror="handleImageError(this, 'fa-hard-drive', 'Hard Disk (HDD)');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Hard Disk Drive (HDD)</h4>
+                            <p class="text-xs text-slate-500 mt-1">Media penyimpanan magnetik berkapasitas besar.</p>
+                        </div>
+                        <!-- SSD -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER SSD -->
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hakduuOY5qbE_SsBk-H388a6AT9nKluj18xK2RMyAjEqNvc_9kakqDo&s=10" alt="Solid State Drive" onerror="handleImageError(this, 'fa-compact-disc', 'Solid State Drive (SSD)');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Solid State Drive (SSD)</h4>
+                            <p class="text-xs text-slate-500 mt-1">Media penyimpanan modern berbasis cip flash yang sangat cepat.</p>
+                        </div>
+                        <!-- Flashdisk -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER FLASHDISK -->
+                                <img src="https://els.id/wp-content/uploads/2024/10/Sandisk-Cruzer-Blade.png" alt="Flashdisk" onerror="handleImageError(this, 'fa-usb', 'Flashdisk');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Flashdisk</h4>
+                            <p class="text-xs text-slate-500 mt-1">Penyimpanan portabel kecil yang praktis dibawa ke mana saja.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- D. Output Device -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="px-3 py-1 rounded-lg bg-emerald-100 text-emerald-600 font-bold text-xs uppercase">Kelompok D</span>
+                        <h3 class="text-xl font-bold text-slate-900">Output Device (Perangkat Keluaran)</h3>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-6">
+                        Perangkat yang menampilkan, mencetak, atau memancarkan hasil akhir pemrosesan data kepada pengguna.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Monitor -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER MONITOR -->
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSobYCU7DX7EbCYoc6DMSJpqRNZ7AWy_oy3ewX_vO5rAk7HX7znqCuELQ&s=10" alt="Monitor" onerror="handleImageError(this, 'fa-desktop', 'Monitor');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Monitor</h4>
+                            <p class="text-xs text-slate-500 mt-1">Menampilkan grafis visual, teks, video, dan antarmuka aplikasi.</p>
+                        </div>
+                        <!-- Printer -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER PRINTER -->
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROs4N_O9Jd9Oa8EoJWzpP2-4yQj4Kp1SFnh-gJrYFUXJ4wFaC_CegFTwtH&s=10" alt="Printer" onerror="handleImageError(this, 'fa-print', 'Printer');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Printer</h4>
+                            <p class="text-xs text-slate-500 mt-1">Mencetak file tulisan dan gambar dari komputer ke media kertas.</p>
+                        </div>
+                        <!-- Speaker -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER SPEAKER -->
+                                <img src="https://cdn.polytron.co.id/public-assets/polytroncoid/2026/09/audivo-5b.webp" alt="Speaker" onerror="handleImageError(this, 'fa-volume-high', 'Speaker');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Speaker</h4>
+                            <p class="text-xs text-slate-500 mt-1">Mengeluarkan efek suara, musik, dan audio dari komputer.</p>
+                        </div>
+                        <!-- Projector -->
+                        <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
+                            <div class="img-container mb-3 bg-white">
+                                <!-- PLACEHOLDER PROJECTOR -->
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVLi1yLAupvMepsicMnKde6lROk28BcC3o2fGFQ_mJw7VGDU3nrNTmMDQ&s=10" alt="Projector" onerror="handleImageError(this, 'fa-video', 'Proyektor');">
+                            </div>
+                            <h4 class="font-bold text-slate-900 text-sm">Projector</h4>
+                            <p class="text-xs text-slate-500 mt-1">Memancarkan tampilan layar monitor ke dinding atau layar lebar.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MATERI 4 — PERANGKAT LUNAK (SOFTWARE) -->
+            <section id="software" class="reveal-on-scroll bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+                <div class="max-w-3xl mb-8">
+                    <span class="text-xs font-bold text-brand-purple uppercase tracking-wider block mb-1">Materi 04</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Mengenal Perangkat Lunak (Software)</h2>
+                    <p class="text-slate-600 text-sm">
+                        Perangkat lunak adalah sekumpulan program, prosedur, dan dokumentasi yang memerintahkan komputer agar bekerja sesuai tujuan pengguna.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- 1. Sistem Operasi -->
+                    <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/40 flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-brand-blue flex items-center justify-center font-bold mb-3">
+                                <i class="fa-solid fa-brands fa-windows"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-base mb-2">1. Sistem Operasi</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                Software paling dasar yang bertugas mengelola seluruh sumber daya hardware komputer dan menjadi fondasi utama bagi aplikasi lain.
+                            </p>
+                            <p class="text-xs text-slate-500 font-medium mb-4">
+                                <b>Contoh:</b> Windows, Linux, macOS, Android, dan iOS.
+                            </p>
+                        </div>
+                        <div class="img-container bg-white">
+                            <!-- PLACEHOLDER SISTEM OPERASI -->
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyX-dth_BQ9NUCUckLhonAhM-Qx__nSsYTMxTEN8dS-TScCWusuTvlEpi7&s=10" alt="Contoh sistem operasi" onerror="handleImageError(this, 'fa-brands fa-osdn', 'Sistem Operasi');">
+                        </div>
+                    </div>
+
+                    <!-- 2. Perangkat Lunak Aplikasi -->
+                    <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/40 flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-purple-100 text-brand-purple flex items-center justify-center font-bold mb-3">
+                                <i class="fa-solid fa-shapes"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-base mb-2">2. Perangkat Lunak Aplikasi</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                Program yang dirancang khusus untuk membantu pengguna menyelesaikan tugas tertentu secara mudah.
+                            </p>
+                            <p class="text-xs text-slate-500 font-medium mb-4">
+                                <b>Contoh:</b> Ms. Word, Ms. Excel, Ms. PowerPoint, Google Chrome, Canva.
+                            </p>
+                        </div>
+                        <div class="img-container bg-white">
+                            <!-- PLACEHOLDER APLIKASI -->
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_Gykq5TnHg36uEK71nhZMe1WkBXSgVFCNls2baKI5Mw&s=10" alt="Contoh perangkat lunak aplikasi" onerror="handleImageError(this, 'fa-cubes', 'Software Aplikasi');">
+                        </div>
+                    </div>
+
+                    <!-- 3. Perangkat Lunak Pemrograman -->
+                    <div class="border border-slate-200 rounded-2xl p-5 bg-slate-50/40 flex flex-col justify-between">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-cyan-100 text-brand-cyan flex items-center justify-center font-bold mb-3">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-base mb-2">3. Perangkat Lunak Pemrograman</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                Lingkungan khusus yang digunakan programmer untuk membuat, menguji, dan mengembangkan program komputer baru.
+                            </p>
+                            <p class="text-xs text-slate-500 font-medium mb-4">
+                                <b>Contoh:</b> Scratch, Python, VS Code.
+                            </p>
+                        </div>
+                        <div class="img-container bg-white">
+                            <!-- PLACEHOLDER PEMROGRAMAN -->
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZ0f_6l7UxOhW5Ih5S70QZypyVJlWyOEhWwf-zX6WG4YLiFHWHUC9BrJPM6rXcbvfb9lALnSrGph5TTBhDDrfDrlyxt-7NJ2Dcph0xmaQuauskGr-WsNUf0kZ62yRWW8BWA6eLutat1KPH/s1600/software+pemrograman.jpg" alt="Perangkat lunak pemrograman" onerror="handleImageError(this, 'fa-terminal', 'Software Pemrograman');">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MATERI 5 — BRAINWARE -->
+            <section id="brainware" class="reveal-on-scroll bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
+                <div class="max-w-3xl mb-8">
+                    <span class="text-xs font-bold text-brand-cyan uppercase tracking-wider block mb-1">Materi 05</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Siapa yang Mengoperasikan Komputer?</h2>
+                    <p class="text-slate-600 text-sm">
+                        Brainware adalah manusia yang berinteraksi langsung dengan sistem komputer. Tanpa peran brainware, hardware dan software tidak akan berguna.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Siswa dan Guru -->
+                    <div class="border border-slate-200/80 rounded-2xl p-5 bg-slate-50/30">
+                        <div class="img-container mb-4 bg-white">
+                            <!-- PLACEHOLDER SISWA GURU -->
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8echgZEfQnfCzxXb9RULlIhvOIc2muOIkMNk-tACC67HXvA2VAzLD5TKy&s=10" alt="Siswa dan guru menggunakan komputer" onerror="handleImageError(this, 'fa-graduation-cap', 'Siswa & Guru');">
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Siswa & Guru (End User)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Menggunakan komputer untuk kegiatan pembelajaran mandiri, tugas sekolah, ujian online, dan presentasi di kelas.
+                        </p>
+                    </div>
+
+                    <!-- Programmer -->
+                    <div class="border border-slate-200/80 rounded-2xl p-5 bg-slate-50/30">
+                        <div class="img-container mb-4 bg-white">
+                            <!-- PLACEHOLDER PROGRAMMER -->
+                            <img src="https://imgsrv2.voi.id/a1o0uovXlUJegdFr5RlptNfBoHUz7nQ3H_4qAOr_aww/auto/1280/853/sm/1/bG9jYWw6Ly8vcHVibGlzaGVycy8zNDk1MzMvMjAyNDAxMTkxNTQ1LW1vYmlsZS5jcm9wcGVkXzE3MDY4NzIwMTQucG5n.jpg" alt="Programmer bekerja dengan komputer" onerror="handleImageError(this, 'fa-laptop-code', 'Programmer');">
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Programmer</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Orang yang memiliki keahlian menulis kode perintah untuk menciptakan program atau website baru.
+                        </p>
+                    </div>
+
+                    <!-- Teknisi Komputer -->
+                    <div class="border border-slate-200/80 rounded-2xl p-5 bg-slate-50/30">
+                        <div class="img-container mb-4 bg-white">
+                            <!-- PLACEHOLDER TEKNISI -->
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2gmzKvjJtIaJmnPaLRuPzrtCTmsLaVSuXhsb5cbIVi8smqWf2yEDNJJhb&s=10" alt="Teknisi komputer" onerror="handleImageError(this, 'fa-wrench', 'Teknisi Komputer');">
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1">Teknisi Komputer</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Spesialis yang bertugas merawat, memeriksa kerusakan, dan memperbaiki perangkat keras maupun sistem komputer.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MATERI 6 — ALUR KERJA SISTEM KOMPUTER -->
+            <section id="alur-kerja" class="reveal-on-scroll bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-white rounded-3xl p-6 sm:p-10 shadow-xl">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="text-xs font-bold text-brand-cyan uppercase tracking-wider block mb-1">Materi 06</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold">Bagaimana Komputer Bekerja?</h2>
+                    <p class="text-slate-300 text-sm mt-2">Sistem komputer mengolah informasi melalui alur kerja berurutan.</p>
+                </div>
+
+                <!-- Step Diagram Container -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+                    
+                    <!-- Step 1: Input -->
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10 flex flex-col justify-between relative">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-blue-500 text-white flex items-center justify-center font-bold text-lg mb-3">1</div>
+                            <h3 class="font-bold text-lg text-brand-accent mb-2"><i class="fa-solid fa-keyboard mr-1"></i> Input</h3>
+                            <p class="text-xs text-slate-200 leading-relaxed">Data atau instruksi dimasukkan pengguna melalui perangkat masukan.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-blue-200 italic">Contoh: Mengetik angka 5 + 5 pada keyboard.</div>
+                    </div>
+
+                    <!-- Step 2: Process -->
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10 flex flex-col justify-between relative">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-purple-500 text-white flex items-center justify-center font-bold text-lg mb-3">2</div>
+                            <h3 class="font-bold text-lg text-purple-300 mb-2"><i class="fa-solid fa-microchip mr-1"></i> Process</h3>
+                            <p class="text-xs text-slate-200 leading-relaxed">Processor (CPU) mengolah data sesuai perintah yang diterima.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-purple-200 italic">Contoh: CPU menghitung hasil penjumlahan 5 + 5 = 10.</div>
+                    </div>
+
+                    <!-- Step 3: Storage -->
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10 flex flex-col justify-between relative">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-cyan-500 text-white flex items-center justify-center font-bold text-lg mb-3">3</div>
+                            <h3 class="font-bold text-lg text-cyan-300 mb-2"><i class="fa-solid fa-database mr-1"></i> Storage</h3>
+                            <p class="text-xs text-slate-200 leading-relaxed">Data dapat disimpan di memori atau media penyimpanan (SSD/HDD).</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-cyan-200 italic">Catatan: Penyimpanan sifatnya opsional sesuai kebutuhan.</div>
+                    </div>
+
+                    <!-- Step 4: Output -->
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/10 flex flex-col justify-between relative">
+                        <div>
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-lg mb-3">4</div>
+                            <h3 class="font-bold text-lg text-emerald-300 mb-2"><i class="fa-solid fa-desktop mr-1"></i> Output</h3>
+                            <p class="text-xs text-slate-200 leading-relaxed">Hasil akhir pemrosesan ditampilkan kepada pengguna.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-emerald-200 italic">Contoh: Layar monitor menampilkan angka 10.</div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- MATERI 7 — RANGKUMAN -->
+            <section id="rangkuman" class="reveal-on-scroll bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 rounded-3xl p-6 sm:p-8 border border-blue-200/60 shadow-sm relative">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-brand-blue text-white flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">Rangkuman Pembelajaran</h2>
+                </div>
+
+                <ul class="space-y-3 text-sm text-slate-700 leading-relaxed mb-8">
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-brand-blue mt-1"></i>
+                        <span><b>Sistem Komputer</b> adalah kesatuan terpadu dari hardware, software, dan brainware untuk mengolah data menjadi informasi.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-brand-blue mt-1"></i>
+                        <span><b>Hardware</b> merupakan komponen perangkat keras fisik komputer yang dapat disentuh.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-brand-blue mt-1"></i>
+                        <span><b>Software</b> adalah program digital berisi petunjuk dan instruksi agar komputer dapat beroperasi.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-brand-blue mt-1"></i>
+                        <span><b>Brainware</b> adalah manusia yang menggunakan dan mengoperasikan sistem komputer.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-brand-blue mt-1"></i>
+                        <span>Hardware dibagi menjadi 4 kelompok utama: <i>Input Device</i>, <i>Processing Device</i>, <i>Storage Device</i>, dan <i>Output Device</i>.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-circle-check text-brand-blue mt-1"></i>
+                        <span>Alur kerja komputer secara umum mengikuti siklus: <b>Input → Process → (Storage) → Output</b>.</span>
+                    </li>
+                </ul>
+
+                <!-- Button Kembali ke Atas -->
+                <div class="text-right">
+                    <a href="#top" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-brand-blue font-semibold text-xs border border-blue-200 shadow-sm transition-all">
+                        <i class="fa-solid fa-arrow-up"></i> Kembali ke Atas
+                    </a>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- TOMBOL NAVIGASI BAWAH -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 bg-white rounded-3xl border border-slate-200/80 shadow-sm">
+                <a href="index.html" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-house"></i> Kembali ke Beranda
+                </a>
+                <a href="kameraar.html" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-brand-purple to-brand-cyan hover:opacity-95 text-white font-semibold text-sm shadow-md shadow-purple-500/20 transition-all flex items-center justify-center gap-2">
+                    <span>Jelajahi Kamera AR</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-blue flex items-center justify-center text-white text-lg font-bold">
+                        <i class="fa-solid fa-desktop"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold text-white block leading-tight">Ainun Najila</span>
+                        <span class="text-xs text-slate-400">Media Pembelajaran Informatika Kelas IX SMP</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-6 text-sm font-medium text-slate-300">
+                    <a href="index.html" class="hover:text-brand-cyan transition-colors">Beranda</a>
+                    
+                    <a href="materi.html" class="text-brand-cyan font-bold">Materi</a>
+                    <a href="kameraar.html" class="hover:text-brand-cyan transition-colors">Kamera AR</a>
+                </div>
+
+                <div class="text-xs text-slate-500">
+                    &copy; <span id="year"></span> Ainun Najila. Buku Informatika SMP/MTs Edisi Revisi 2024.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // Automatic Year Set
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Hamburger Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            if (isOpen) {
+                mobileMenu.classList.add('hidden');
+                hamburgerIcon.classList.remove('fa-xmark');
+                hamburgerIcon.classList.add('fa-bars');
+            } else {
+                mobileMenu.classList.remove('hidden');
+                hamburgerIcon.classList.remove('fa-bars');
+                hamburgerIcon.classList.add('fa-xmark');
+            }
+        });
+
+        // Image Failure Handling Fallback Logic
+        function handleImageError(imgElement, fontAwesomeIcon, placeholderTitle) {
+            const container = imgElement.parentElement;
+            
+            // Prevent multiple error trigger loops
+            imgElement.onerror = null;
+            imgElement.style.display = 'none';
+
+            // Check if fallback placeholder already exists
+            if (!container.querySelector('.img-placeholder-fallback')) {
+                const fallbackDiv = document.createElement('div');
+                fallbackDiv.className = 'img-placeholder-fallback';
+                fallbackDiv.innerHTML = `
+                    <i class="fa-solid ${fontAwesomeIcon} text-2xl text-slate-400 mb-1"></i>
+                    <span class="text-xs text-slate-500 font-semibold">${placeholderTitle}</span>
+                    <span class="text-[10px] text-slate-400 mt-0.5">(Gambar Belum Dimuat)</span>
+                `;
+                container.appendChild(fallbackDiv);
+            }
+        }
+
+        // Initialize Image Fallback checks for initial load when src is empty or unchanged placeholder text
+        document.addEventListener('DOMContentLoaded', () => {
+            const images = document.querySelectorAll('.img-container img');
+            images.forEach(img => {
+                const src = img.getAttribute('src');
+                if (!src || src.startsWith('ISI_SOURCE_GAMBAR')) {
+                    // Trigger custom fallback immediately
+                    const altText = img.getAttribute('alt') || 'Gambar Komputer';
+                    handleImageError(img, 'fa-image', altText);
+                }
+            });
+        });
+
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
