@@ -1,0 +1,195 @@
+html.dark {
+    color-scheme: dark;
+    --bg-body: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: #334155;
+}
+
+html.dark body {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+
+html.dark .glass-nav {
+    background: rgba(15, 23, 42, 0.9);
+}
+
+html.dark [class~="bg-white"],
+html.dark [class~="bg-white/95"],
+html.dark [class~="bg-white/90"] {
+    background-color: #1e293b !important;
+}
+
+html.dark [class~="bg-gray-50"],
+html.dark [class~="bg-gray-100"],
+html.dark [class~="bg-gray-200"],
+html.dark [class~="bg-slate-50"],
+html.dark [class~="bg-slate-100"],
+html.dark [class~="bg-slate-200"] {
+    background-color: #273449 !important;
+}
+
+html.dark [class~="bg-blue-50"],
+html.dark [class~="bg-blue-50/60"],
+html.dark [class~="bg-indigo-50"],
+html.dark [class~="bg-purple-50"],
+html.dark [class~="bg-purple-50/60"],
+html.dark [class~="bg-cyan-50"],
+html.dark [class~="bg-green-50"],
+html.dark [class~="bg-emerald-50"],
+html.dark [class~="bg-yellow-50"],
+html.dark [class~="bg-red-50"] {
+    background-color: #1e3a5f !important;
+}
+
+html.dark [class~="text-gray-900"],
+html.dark [class~="text-gray-800"],
+html.dark [class~="text-slate-900"],
+html.dark [class~="text-slate-800"],
+html.dark [class~="text-slate-700"] {
+    color: #e2e8f0 !important;
+}
+
+html.dark [class~="text-gray-700"],
+html.dark [class~="text-gray-600"],
+html.dark [class~="text-slate-600"],
+html.dark [class~="text-slate-500"],
+html.dark [class~="text-slate-400"] {
+    color: #cbd5e1 !important;
+}
+
+html.dark [class~="text-blue-700"],
+html.dark [class~="text-blue-800"],
+html.dark [class~="text-indigo-700"],
+html.dark [class~="text-purple-700"] {
+    color: #bfdbfe !important;
+}
+
+html.dark [class~="border-gray-100"],
+html.dark [class~="border-gray-200"],
+html.dark [class~="border-slate-100"],
+html.dark [class~="border-slate-200"],
+html.dark [class~="border-slate-200/80"],
+html.dark [class~="border-blue-100"],
+html.dark [class~="border-purple-100"] {
+    border-color: #334155 !important;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea {
+    background-color: #1e293b;
+    color: #e2e8f0;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+    color: #94a3b8;
+}
+
+html.dark .animated-background {
+    background:
+        radial-gradient(ellipse at 12% 18%, rgba(30, 58, 95, 0.45), transparent 42%),
+        radial-gradient(ellipse at 88% 68%, rgba(76, 29, 149, 0.25), transparent 44%);
+}
+
+html.dark .img-container,
+html.dark model-viewer {
+    background-color: #1e293b;
+}
+
+html.dark .info-box {
+    background-color: #172554;
+    color: #bfdbfe;
+}
+
+html.dark .sticky-progress {
+    background: rgba(30, 41, 59, 0.96);
+}
+
+html.dark .progress-bar-bg {
+    background-color: #334155;
+}
+
+html.dark .option-label:hover {
+    background-color: #273449;
+}
+
+.option-label.selected {
+    background-color: #eef2ff;
+}
+
+html.dark .option-label.selected {
+    background-color: #312e81;
+}
+
+html.dark .modal-content {
+    background-color: #1e293b;
+}
+
+html.dark .btn-cancel {
+    background-color: #334155;
+    color: #e2e8f0;
+}
+
+html.dark .btn-cancel:hover {
+    background-color: #475569;
+}
+
+html.dark .score-result {
+    background-color: #064e3b;
+    border-color: #047857;
+    color: #d1fae5;
+}
+
+html.dark .alert-error {
+    background-color: #450a0a;
+    border-color: #991b1b;
+    color: #fecaca;
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.65);
+    color: #475569;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: #f1f5f9;
+    color: #1d4ed8;
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+html.dark .theme-toggle {
+    background: #1e293b;
+    border-color: #475569;
+    color: #fbbf24;
+}
+
+html.dark .theme-toggle:hover {
+    background: #334155;
+    color: #fde68a;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    body,
+    .glass-nav,
+    .theme-toggle {
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+}

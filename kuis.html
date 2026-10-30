@@ -64,6 +64,39 @@
             opacity: 0.9;
         }
 
+        .quiz-header {
+            position: relative;
+        }
+
+        .quiz-header h1 {
+            padding: 18px 36px 0;
+        }
+
+        .quiz-header .theme-toggle {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+        }
+
+        .credits-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 9999px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .credits-link:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
         /* Card System */
         .card {
             background: var(--card-bg);
@@ -332,15 +365,21 @@
             border: 2px solid var(--danger) !important;
         }
     </style>
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
 </head>
 <body>
 
 <div class="container">
 
     <!-- Header -->
-    <header>
+    <header class="quiz-header">
+        <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Aktifkan mode gelap" aria-pressed="false" title="Mode gelap">
+            <i id="theme-toggle-icon" class="fa-solid fa-moon" aria-hidden="true"></i>
+        </button>
         <h1><i class="fa-solid fa-laptop-code"></i> KUIS INFORMATIKA KELAS IX</h1>
         <p>Materi: Sistem Komputer & Komponen Utama Komputer</p>
+        <a href="credits.html" class="credits-link"><i class="fa-solid fa-users"></i> Credits</a>
     </header>
 
     <!-- Alert Box Error -->
