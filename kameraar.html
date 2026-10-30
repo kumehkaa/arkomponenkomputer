@@ -84,6 +84,10 @@
         .model-button:hover {
             background-color: #d1d5db;
         }
+        .model-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
         .model-button.active {
             background-color: #0077b6;
             color: #ffffff;
@@ -116,7 +120,7 @@
                     </div>
                     <div>
                         <span class="text-xl font-bold bg-gradient-to-r from-brand-blue via-brand-purple to-brand-cyan bg-clip-text text-transparent block leading-tight">
-                            Ainun Najila
+                            Sistem Komputer
                         </span>
                         <span class="text-xs text-slate-500 font-medium tracking-wide block">
                             Informatika Kelas IX SMP
@@ -244,11 +248,23 @@
         usdz_src: '',
         desc: 'Processor atau CPU merupakan komponen pemrosesan yang menjalankan instruksi dan mengolah data. Processor berperan penting dalam mengatur pelaksanaan berbagai tugas pada komputer.'
     },
+    {
+        name: 'GPU',
+        glb_src: 'aset/gpu.glb',
+        usdz_src: '',
+        desc: 'GPU (Graphics Processing Unit) adalah komponen yang mengolah dan menampilkan grafis pada komputer.'
+    },
     { 
         name: 'Motherboard', 
         glb_src: 'aset/motherboard.glb', 
         usdz_src: '',
         desc: 'Motherboard adalah papan utama pada komputer yang menjadi tempat terhubungnya berbagai komponen, seperti processor, RAM, dan perangkat lainnya, sehingga dapat bekerja bersama sebagai satu sistem.'
+    },
+    {
+        name: 'PC Casing',
+        glb_src: 'aset/pc_case.glb',
+        usdz_src: '',
+        desc: 'PC casing adalah wadah yang melindungi dan menjadi tempat pemasangan komponen-komponen komputer.'
     },
     { 
         name: 'RAM', 
@@ -315,6 +331,10 @@
                 const button = document.createElement('button');
                 button.textContent = model.name;
                 button.className = 'model-button';
+                button.disabled = !model.glb_src;
+                if (button.disabled) {
+                    button.title = 'Model 3D belum ditambahkan';
+                }
 
                 if (index === 0) {
                     button.classList.add('active');
