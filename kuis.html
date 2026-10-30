@@ -303,6 +303,20 @@
             margin-bottom: 15px;
         }
 
+        .score-result {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            border-radius: 12px;
+            color: #065f46;
+            margin-top: 20px;
+            padding: 18px;
+        }
+
+        .score-result h3 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+        }
+
         .alert-error {
             background-color: #fef2f2;
             border: 1px solid #fca5a5;
@@ -341,6 +355,7 @@
                 <li>Kuis terdiri dari <strong>15 Pilihan Ganda</strong> dan <strong>5 Soal Uraian</strong>.</li>
                 <li>Seluruh soal <strong>wajib diisi</strong> sebelum dapat dikumpulkan.</li>
                 <li>Waktu pengerjaan bersifat mandiri. Pastikan jaringan internet stabil saat mengumpulkan.</li>
+                <li>Nilai uraian dihitung otomatis berdasarkan kata kunci dan dapat ditinjau kembali oleh guru.</li>
             </ul>
         </div>
         
@@ -397,6 +412,11 @@
         <h2>Terima Kasih!</h2>
         <p style="margin-top: 10px; color: var(--text-muted);">Jawaban dan data pengerjaan kuis Anda telah berhasil tersimpan di sistem data Guru.</p>
         <p style="margin-top: 5px; font-weight: 500;" id="userSummary"></p>
+        <div id="scoreResult" class="score-result hidden" aria-live="polite">
+            <h3 id="finalScore"></h3>
+            <p id="scoreBreakdown"></p>
+        </div>
+        <p id="scoreNotice" class="hidden" style="margin-top: 15px; color: var(--text-muted);"></p>
         <div style="margin-top: 25px;">
             <button class="btn" onclick="location.reload()"><i class="fa-solid fa-rotate-right"></i> Kembali ke Halaman Depan</button>
         </div>
@@ -422,7 +442,7 @@
        KONFIGURASI PENTING
        ========================================================================== */
     // GANTI URL DI BAWAH INI DENGAN URL DEPLOYMENT GOOGLE APPS SCRIPT WEB APP ANDA!
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjNl_W6rjoz3ToLjO35slMtIcdWtnDJfoOGnP7aAr32c3eijRoh8YJz4m3zAlf2nE4/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxfXtMCvauHq2oaF1YJ18OjtMw4Pf_oOpzxGmnxRKf90uDDSn-kOFO6ihFdTY9dloxw/exec";
 
     /* DATA SOAL PILIHAN GANDA */
     const pgQuestions = [
@@ -717,7 +737,20 @@
                 closeModal();
                 document.getElementById('quizScreen').classList.add('hidden');
                 document.getElementById('thankYouScreen').classList.remove('hidden');
-                document.getElementById('userSummary').innerText = `Nama: ${studentData.nama} (${studentData.kelas}) | ID Pengiriman: ${result.submissionId}`;
+                document.getElementById('userSummary').innerText = `Nama: ${studentData.nama} (${studentData.kelas}) | ID Pengiriman: ${result.submissionId || "tersimpan"}`;
+
+                const hasScore = result.nilai !== undefined && result.nilai !== null && Number.isFinite(Number(result.nilai));
+                if (hasScore) {
+                    document.getElementById('finalScore').innerText = `Nilai Akhir: ${Number(result.nilai)} / 100`;
+                    document.getElementById('scoreBreakdown').innerText =
+                        `Pilihan ganda: ${Number(result.nilaiPG)} / 60 (${Number(result.jumlahBenarPG)} benar) · Uraian: ${Number(result.nilaiUraian)} / 40`;
+                    document.getElementById('scoreResult').classList.remove('hidden');
+                } else {
+                    document.getElementById('scoreNotice').innerText =
+                        "Jawaban sudah tersimpan, tetapi nilai belum dikirim oleh server. Perbarui deployment Apps Script dengan kode terbaru agar nilai dapat ditampilkan.";
+                    document.getElementById('scoreNotice').classList.remove('hidden');
+                }
+
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 throw new Error(result.message || "Gagal menyimpan jawaban.");
