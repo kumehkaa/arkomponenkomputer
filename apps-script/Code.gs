@@ -54,7 +54,8 @@ const ESSAY_RUBRICS = [
 
 function setupQuizSheet() {
   const sheet = getQuizSheet_();
-  return `Sheet "${sheet.getName()}" siap digunakan.`;
+  formatQuizSheet_(sheet);
+  return `Sheet "${sheet.getName()}" siap digunakan dan sudah dirapikan.`;
 }
 
 function doPost(event) {
@@ -91,6 +92,7 @@ function doPost(event) {
       JSON.stringify(submission.essay),
       JSON.stringify(grading.rincianUraian)
     ]);
+    formatQuizSubmissionRow_(sheet, sheet.getLastRow(), 1);
   } finally {
     lock.releaseLock();
   }
@@ -182,10 +184,66 @@ function getQuizSheet_() {
   }
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(QUIZ_HEADERS);
-    sheet.setFrozenRows(1);
   }
 
   return sheet;
+}
+
+function formatQuizSheet_(sheet) {
+  const columnWidths = [175, 235, 190, 90, 125, 105, 115, 110, 340, 420, 360];
+  const columnCount = QUIZ_HEADERS.length;
+  const rowCount = Math.max(sheet.getMaxRows(), 2);
+  const dataRowCount = Math.max(sheet.getLastRow() - 1, 1);
+
+  sheet.setFrozenRows(1);
+  sheet.setFrozenColumns(4);
+  sheet.setHiddenGridlines(true);
+  sheet.setTabColor('#4f46e5');
+  sheet.setRowHeight(1, 42);
+
+  columnWidths.forEach((width, index) => sheet.setColumnWidth(index + 1, width));
+
+  if (!sheet.getFilter()) {
+    sheet.getRange(1, 1, rowCount, columnCount).createFilter();
+  }
+
+  sheet.getRange(1, 1, 1, columnCount)
+    .setBackground('#312e81')
+    .setFontColor('#ffffff')
+    .setFontWeight('bold')
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle')
+    .setWrap(true);
+
+  sheet.getRange(2, 1, dataRowCount, columnCount).setVerticalAlignment('middle');
+  sheet.getRange(2, 1, dataRowCount, 1).setNumberFormat('dd mmm yyyy, hh:mm');
+  sheet.getRange(2, 5, dataRowCount, 4).setHorizontalAlignment('center').setNumberFormat('0');
+  sheet.getRange(2, 9, dataRowCount, 3)
+    .setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP)
+    .setVerticalAlignment('top');
+
+  formatQuizSubmissionRow_(sheet, 2, Math.max(sheet.getLastRow() - 1, 0));
+}
+
+function formatQuizSubmissionRow_(sheet, row, count) {
+  if (count === 0) {
+    return;
+  }
+
+  const columnCount = QUIZ_HEADERS.length;
+  const backgrounds = [];
+  for (let index = 0; index < count; index++) {
+    const color = (row + index) % 2 === 0 ? '#eef2ff' : '#ffffff';
+    backgrounds.push(new Array(columnCount).fill(color));
+  }
+
+  sheet.getRange(row, 1, count, columnCount)
+    .setBackgrounds(backgrounds)
+    .setVerticalAlignment('middle')
+    .setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
+  sheet.getRange(row, 1, count, 1).setNumberFormat('dd mmm yyyy, hh:mm');
+  sheet.getRange(row, 5, count, 4).setHorizontalAlignment('center').setNumberFormat('0');
+  sheet.setRowHeights(row, count, 48);
 }
 
 function safeSheetText_(value) {

@@ -131,11 +131,6 @@
             box-shadow: 0 20px 30px -10px rgba(37, 99, 235, 0.15);
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .background-orb {
-                animation: none;
-            }
-        }
     </style>
 </head>
 <body class="text-slate-800 antialiased selection:bg-brand-cyan selection:text-white">
@@ -529,27 +524,27 @@
         const particleContext = particleCanvas.getContext('2d');
 
         if (particleContext) {
-            const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
             let particles = [];
             let animationFrame;
             let canvasWidth = 0;
             let canvasHeight = 0;
+            let lastFrameTime = 0;
 
             const createParticles = () => {
-                const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+                const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
                 canvasWidth = window.innerWidth;
                 canvasHeight = window.innerHeight;
                 particleCanvas.width = Math.floor(canvasWidth * pixelRatio);
                 particleCanvas.height = Math.floor(canvasHeight * pixelRatio);
                 particleContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-                const particleCount = Math.min(70, Math.max(28, Math.floor((canvasWidth * canvasHeight) / 18000)));
+                const particleCount = Math.min(45, Math.max(24, Math.floor((canvasWidth * canvasHeight) / 28000)));
                 particles = Array.from({ length: particleCount }, () => ({
                     x: Math.random() * canvasWidth,
                     y: Math.random() * canvasHeight,
                     radius: Math.random() * 1.5 + 1,
-                    speedX: (Math.random() - 0.5) * 0.45,
-                    speedY: (Math.random() - 0.5) * 0.45
+                    speedX: (Math.random() - 0.5) * 0.6,
+                    speedY: (Math.random() - 0.5) * 0.6
                 }));
             };
 
@@ -567,58 +562,47 @@
 
                     particleContext.beginPath();
                     particleContext.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                    particleContext.fillStyle = 'rgba(59, 130, 246, 0.48)';
+                    particleContext.fillStyle = 'rgba(59, 130, 246, 0.55)';
                     particleContext.fill();
-
-                    for (let otherIndex = index + 1; otherIndex < particles.length; otherIndex++) {
-                        const otherParticle = particles[otherIndex];
-                        const distance = Math.hypot(particle.x - otherParticle.x, particle.y - otherParticle.y);
-
-                        if (distance < 115) {
-                            particleContext.beginPath();
-                            particleContext.moveTo(particle.x, particle.y);
-                            particleContext.lineTo(otherParticle.x, otherParticle.y);
-                            particleContext.strokeStyle = `rgba(99, 102, 241, ${0.14 * (1 - distance / 115)})`;
-                            particleContext.lineWidth = 1;
-                            particleContext.stroke();
-                        }
-                    }
                 });
             };
 
-            const animateParticles = () => {
-                drawParticles(true);
+            const animateParticles = (timestamp) => {
+                if (timestamp - lastFrameTime >= 1000 / 30) {
+                    drawParticles(true);
+                    lastFrameTime = timestamp;
+                }
                 animationFrame = window.requestAnimationFrame(animateParticles);
             };
 
-            const updateParticleMotion = () => {
+            const startParticleAnimation = () => {
                 window.cancelAnimationFrame(animationFrame);
-
-                if (reducedMotionQuery.matches) {
-                    drawParticles(false);
-                } else {
+                lastFrameTime = 0;
+                if (!document.hidden) {
                     animateParticles();
                 }
             };
 
             createParticles();
-            updateParticleMotion();
+            startParticleAnimation();
             window.addEventListener('resize', () => {
                 createParticles();
-                updateParticleMotion();
+                startParticleAnimation();
             });
-            reducedMotionQuery.addEventListener('change', updateParticleMotion);
             document.addEventListener('visibilitychange', () => {
                 if (document.hidden) {
                     window.cancelAnimationFrame(animationFrame);
                 } else {
-                    updateParticleMotion();
+                    startParticleAnimation();
                 }
             });
         }
 
         // Set dynamic current year in footer
-        document.getElementById('year').textContent = new Date().getFullYear();
+        const yearElement = document.getElementById('year');
+        if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+        }
 
         // Hamburger Menu Toggle Logic
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
