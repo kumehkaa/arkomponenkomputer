@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mainkan kuis interaktif sistem komputer dan dapatkan penjelasan langsung untuk setiap jawaban.">
+    <title>Kuis Interaktif - Sistem Komputer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <style>
+        :root {
+            color-scheme: light;
+            --page-bg: #f8fafc;
+            --surface: #ffffff;
+            --ink: #172554;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --brand: #2563eb;
+            --brand-deep: #7c3aed;
+        }
+
+        html.dark {
+            color-scheme: dark;
+            --page-bg: #0f172a;
+            --surface: #1e293b;
+            --ink: #e2e8f0;
+            --muted: #94a3b8;
+            --line: #334155;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px;
+            background:
+                radial-gradient(ellipse at 10% 5%, rgba(96, 165, 250, 0.17), transparent 36%),
+                radial-gradient(ellipse at 90% 90%, rgba(167, 139, 250, 0.16), transparent 38%),
+                var(--page-bg);
+            color: var(--ink);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .page-shell { width: min(100%, 760px); margin: 0 auto; }
+        .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+        .back-link { color: var(--muted); font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+        .back-link:hover { color: var(--brand); }
+        .brand-mark { display: inline-flex; align-items: center; gap: 9px; color: var(--brand); font-weight: 700; }
+        .theme-toggle { width: 42px; height: 42px; }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 34px 32px;
+            border-radius: 24px;
+            background: linear-gradient(130deg, #2563eb, #7c3aed);
+            color: white;
+            box-shadow: 0 18px 40px rgba(37, 99, 235, 0.2);
+        }
+        .hero::after {
+            position: absolute;
+            top: -90px;
+            right: -35px;
+            width: 240px;
+            height: 240px;
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 50%;
+            box-shadow: 0 0 0 28px rgba(255,255,255,.05), 0 0 0 58px rgba(255,255,255,.04);
+            content: "";
+        }
+        .eyebrow { margin: 0 0 8px; color: #dbeafe; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+        .hero h1 { position: relative; z-index: 1; margin: 0; font-size: clamp(1.7rem, 5vw, 2.4rem); line-height: 1.2; }
+        .hero p:last-child { position: relative; z-index: 1; max-width: 520px; margin: 12px 0 0; color: #e0e7ff; font-size: .95rem; }
+
+        .quiz-card {
+            margin-top: 20px;
+            padding: clamp(22px, 5vw, 34px);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: var(--surface);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, .07);
+        }
+        .status-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+        .status-label, .score-label { color: var(--muted); font-size: .82rem; font-weight: 600; }
+        .score-pill { padding: 7px 12px; border-radius: 999px; background: #eff6ff; color: #1d4ed8; font-size: .84rem; font-weight: 700; white-space: nowrap; }
+        html.dark .score-pill { background: #1e3a5f; color: #bfdbfe; }
+        .progress-track { height: 9px; overflow: hidden; border-radius: 99px; background: var(--line); }
+        .progress-value { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #2563eb, #8b5cf6); transition: width .3s ease; }
+        .question-count { margin: 24px 0 8px; color: var(--brand); font-size: .84rem; font-weight: 700; }
+        .question-text { margin: 0 0 22px; font-size: clamp(1.15rem, 3vw, 1.42rem); line-height: 1.55; }
+        .question-visual { margin: 0 0 20px; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: radial-gradient(ellipse at center, #fff 0%, #eff6ff 100%); }
+        html.dark .question-visual { background: radial-gradient(ellipse at center, #1e293b 0%, #172554 100%); }
+        .question-visual[hidden] { display: none; }
+        .question-visual model-viewer { display: block; width: 100%; height: clamp(220px, 48vw, 330px); --poster-color: transparent; }
+        .visual-caption { margin: 0; padding: 0 16px 14px; color: var(--muted); font-size: .78rem; text-align: center; }
+        .answers { display: grid; gap: 11px; }
+        .answer-button {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid var(--line);
+            border-radius: 14px;
+            background: var(--surface);
+            color: var(--ink);
+            cursor: pointer;
+            font: inherit;
+            text-align: left;
+            transition: border-color .18s ease, background-color .18s ease, transform .18s ease;
+        }
+        .answer-button:hover:not(:disabled) { transform: translateY(-1px); border-color: #93c5fd; background: #f8fbff; }
+        html.dark .answer-button:hover:not(:disabled) { background: #273449; }
+        .answer-button:focus-visible, .primary-button:focus-visible, .back-link:focus-visible { outline: 3px solid #93c5fd; outline-offset: 3px; }
+        .answer-letter { display: grid; flex: 0 0 30px; width: 30px; height: 30px; place-items: center; border-radius: 9px; background: #f1f5f9; color: #475569; font-size: .82rem; font-weight: 700; }
+        html.dark .answer-letter { background: #334155; color: #e2e8f0; }
+        .answer-button.correct { border-color: #22c55e; background: #f0fdf4; color: #166534; }
+        .answer-button.incorrect { border-color: #f87171; background: #fef2f2; color: #991b1b; }
+        html.dark .answer-button.correct { background: #064e3b; color: #d1fae5; }
+        html.dark .answer-button.incorrect { background: #450a0a; color: #fecaca; }
+        .answer-button:disabled { cursor: default; }
+
+        .feedback { margin-top: 18px; padding: 15px 16px; border-radius: 14px; font-size: .9rem; }
+        .feedback[hidden] { display: none; }
+        .feedback strong { display: block; margin-bottom: 3px; }
+        .feedback.good { background: #f0fdf4; color: #166534; }
+        .feedback.try-again { background: #fff7ed; color: #9a3412; }
+        html.dark .feedback.good { background: #064e3b; color: #d1fae5; }
+        html.dark .feedback.try-again { background: #431407; color: #fed7aa; }
+        .actions { display: flex; justify-content: flex-end; margin-top: 20px; }
+        .primary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 48px;
+            padding: 12px 20px;
+            border: 0;
+            border-radius: 13px;
+            background: linear-gradient(120deg, #2563eb, #7c3aed);
+            color: white;
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+        }
+        .primary-button:hover { filter: brightness(1.06); }
+        .intro, .result { padding: 12px 0 4px; text-align: center; }
+        .intro-icon, .result-icon { display: grid; width: 72px; height: 72px; margin: 0 auto 18px; place-items: center; border-radius: 22px; background: #eff6ff; color: var(--brand); font-size: 1.8rem; }
+        html.dark .intro-icon, html.dark .result-icon { background: #1e3a5f; }
+        .intro h2, .result h2 { margin: 0; font-size: 1.45rem; }
+        .intro p, .result p { color: var(--muted); }
+        .intro ul { display: inline-grid; gap: 8px; margin: 10px 0 24px; padding: 0; color: var(--muted); list-style: none; text-align: left; }
+        .intro li i { width: 22px; color: #22c55e; }
+        .final-score { margin: 12px 0; color: var(--brand); font-size: 2.4rem; font-weight: 800; }
+        .perfect-score { margin: 22px 0; }
+        .perfect-score h3 { margin: 0 0 12px; color: var(--brand); font-size: 1.6rem; }
+        .perfect-score img { display: block; width: min(100%, 360px); height: auto; margin: 0 auto; border-radius: 18px; }
+        .hidden { display: none !important; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
+
+        @media (max-width: 520px) {
+            body { padding: 16px; }
+            .hero { padding: 28px 22px; }
+            .status-row { align-items: flex-start; }
+            .answer-button { padding: 12px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <div class="topbar">
+            <a class="back-link" href="index.html"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Beranda</a>
+            <span class="brand-mark"><i class="fa-solid fa-microchip" aria-hidden="true"></i> Sistem Komputer</span>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Aktifkan mode gelap" aria-pressed="false" title="Mode gelap">
+                <i id="theme-toggle-icon" class="fa-solid fa-moon" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <header class="hero">
+            <p class="eyebrow">Belajar sambil bermain</p>
+            <h1>Kuis Interaktif</h1>
+            <p>Jawab tantangan seputar sistem komputer, lihat hasilnya langsung, dan pahami alasan di balik setiap jawaban.</p>
+        </header>
+
+        <section class="quiz-card" aria-label="Permainan kuis sistem komputer">
+            <div id="intro-screen" class="intro">
+                <div class="intro-icon" aria-hidden="true"><i class="fa-solid fa-gamepad"></i></div>
+                <h2>Siap menguji pengetahuanmu?</h2>
+                <p>Ada 10 pertanyaan pilihan ganda, termasuk tantangan mengenali komponen dari model 3D. Tidak ada batas waktu—fokus dan nikmati tantangannya!</p>
+                <ul>
+                    <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Jawaban langsung disertai penjelasan</li>
+                    <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Skor dan progres diperbarui otomatis</li>
+                    <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Bisa dimainkan ulang kapan saja</li>
+                </ul>
+                <div><button id="start-button" class="primary-button" type="button">Mulai Kuis <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
+            </div>
+
+            <div id="question-screen" class="hidden">
+                <div class="status-row">
+                    <span id="question-progress" class="status-label">Soal 1 dari 10</span>
+                    <span class="score-pill"><i class="fa-solid fa-star" aria-hidden="true"></i> Skor: <span id="score">0</span></span>
+                </div>
+                <div class="progress-track" role="progressbar" aria-label="Progres kuis" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+                    <div id="progress-value" class="progress-value"></div>
+                </div>
+                <p id="question-count" class="question-count"></p>
+                <h2 id="question-text" class="question-text"></h2>
+                <figure id="question-visual" class="question-visual" hidden>
+                    <model-viewer id="question-model" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="none" shadow-intensity="1"></model-viewer>
+                    <figcaption class="visual-caption">Model 3D — geser untuk memutar, cubit atau gunakan roda mouse untuk memperbesar.</figcaption>
+                </figure>
+                <div id="answers" class="answers"></div>
+                <div id="feedback" class="feedback" role="status" aria-live="polite" hidden>
+                    <strong id="feedback-title"></strong>
+                    <span id="feedback-explanation"></span>
+                </div>
+                <div class="actions">
+                    <button id="next-button" class="primary-button hidden" type="button">Soal Berikutnya <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                </div>
+            </div>
+
+            <div id="result-screen" class="result hidden" aria-live="polite">
+                <div class="result-icon" aria-hidden="true"><i id="result-icon" class="fa-solid fa-trophy"></i></div>
+                <h2 id="result-title">Kuis selesai!</h2>
+                <p class="final-score"><span id="final-score">0</span> / 10</p>
+                <p id="result-message"></p>
+                <div id="perfect-score" class="perfect-score hidden">
+                    <h3>Kamu sigma</h3>
+                    <img src="aset/sigma.jpg" alt="Wajah emoji biru dengan ekspresi percaya diri">
+                </div>
+                <button id="restart-button" class="primary-button" type="button"><i class="fa-solid fa-rotate-right" aria-hidden="true"></i> Main Lagi</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const questions = [
+            {
+                category: "Komponen Sistem Komputer",
+                question: "Apa nama perangkat keras (hardware) ini?",
+                answers: ["Sistem operasi", "Keyboard", "Aplikasi pengolah kata", "Pengguna komputer"],
+                correct: 1,
+                explanation: "Keyboard adalah perangkat fisik yang dapat disentuh, sehingga termasuk hardware.",
+                image: "aset/keyboard.glb",
+                imageAlt: "Model 3D keyboard komputer"
+            },
+            {
+                category: "Prosesor",
+                question: "Bagian CPU yang mengatur jalannya instruksi dan mengoordinasikan kerja komponen lain adalah...",
+                answers: ["Control Unit (CU)", "Arithmetic Logic Unit (ALU)", "RAM", "SSD"],
+                correct: 0,
+                explanation: "Control Unit mengendalikan dan mengoordinasikan pelaksanaan instruksi di dalam CPU."
+            },
+            {
+                category: "Memori",
+                question: "Apa yang terjadi pada data di RAM ketika komputer dimatikan?",
+                answers: ["Tetap tersimpan selamanya", "Otomatis pindah ke SSD", "Hilang karena RAM bersifat volatile", "Berubah menjadi data ROM"],
+                correct: 2,
+                explanation: "RAM bersifat volatile, jadi isinya tidak dipertahankan saat daya komputer terputus.",
+                image: "aset/ram.glb",
+                imageAlt: "Model 3D modul RAM"
+            },
+            {
+                category: "Penyimpanan",
+                question: "Perangkat penyimpanan pada gambar ini menyimpan data pada piringan magnetik. Apa namanya?",
+                answers: ["Solid State Drive (SSD)", "Hard Disk Drive (HDD)", "Random Access Memory (RAM)", "Graphics Processing Unit (GPU)"],
+                correct: 1,
+                explanation: "Itu adalah HDD. Berbeda dengan SSD yang menggunakan memori flash, HDD menyimpan data pada piringan magnetik yang berputar.",
+                image: "aset/hdd.glb",
+                imageAlt: "Model 3D hard disk drive dengan piringan magnetik"
+            },
+            {
+                category: "Perangkat Input",
+                question: "Perangkat manakah yang digunakan untuk memasukkan suara ke komputer?",
+                answers: ["Speaker", "Monitor", "Mikrofon", "Proyektor"],
+                correct: 2,
+                explanation: "Mikrofon menangkap suara dan mengirimkannya sebagai masukan ke komputer."
+            },
+            {
+                category: "Motherboard",
+                question: "Apa fungsi utama motherboard?",
+                answers: ["Mencetak dokumen", "Menghubungkan dan memungkinkan komunikasi antarkomponen komputer", "Menyimpan semua file secara permanen", "Menampilkan gambar ke pengguna"],
+                correct: 1,
+                explanation: "Motherboard menjadi papan utama tempat komponen terhubung dan saling berkomunikasi."
+            },
+            {
+                category: "Grafis",
+                question: "Komponen pada gambar ini terutama bertugas untuk...",
+                answers: ["Mengolah grafis dan menghasilkan tampilan gambar", "Menyuplai daya listrik ke komputer", "Menyimpan data sementara", "Menghubungkan komputer ke jaringan"],
+                correct: 0,
+                explanation: "Ini adalah GPU (Graphics Processing Unit), komponen yang memproses data grafis untuk ditampilkan pada layar.",
+                image: "aset/gpu.glb",
+                imageAlt: "Model 3D kartu grafis atau GPU"
+            },
+            {
+                category: "Sistem Operasi",
+                question: "Manakah contoh perangkat lunak sistem operasi?",
+                answers: ["Microsoft Word", "Windows", "Kabel HDMI", "Keyboard"],
+                correct: 1,
+                explanation: "Windows adalah sistem operasi yang mengelola perangkat keras dan menyediakan layanan bagi aplikasi."
+            },
+            {
+                category: "Perangkat Output",
+                question: "Perangkat manakah yang menampilkan hasil pemrosesan komputer secara visual?",
+                answers: ["Mouse", "Mikrofon", "Monitor", "Scanner"],
+                correct: 2,
+                explanation: "Monitor adalah perangkat output yang menampilkan teks, gambar, dan video."
+            },
+            {
+                category: "Brainware",
+                question: "Dalam sistem komputer, istilah brainware merujuk pada...",
+                answers: ["Komponen fisik komputer", "Program yang dijalankan komputer", "Manusia yang menggunakan atau mengelola komputer", "Jaringan yang menghubungkan komputer"],
+                correct: 2,
+                explanation: "Brainware adalah orang yang menggunakan, mengoperasikan, atau mengelola sistem komputer."
+            }
+        ];
+
+        const introScreen = document.getElementById("intro-screen");
+        const questionScreen = document.getElementById("question-screen");
+        const resultScreen = document.getElementById("result-screen");
+        const answerContainer = document.getElementById("answers");
+        const feedback = document.getElementById("feedback");
+        let questionOrder = [];
+        let currentQuestion = 0;
+        let score = 0;
+
+        function shuffle(items) {
+            const shuffled = items.slice();
+            for (let index = shuffled.length - 1; index > 0; index -= 1) {
+                const swapIndex = Math.floor(Math.random() * (index + 1));
+                [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz() {
+            questionOrder = shuffle(questions.map((_, index) => index));
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("score").textContent = String(score);
+            introScreen.classList.add("hidden");
+            resultScreen.classList.add("hidden");
+            questionScreen.classList.remove("hidden");
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const question = questions[questionOrder[currentQuestion]];
+            const progress = document.querySelector('[role="progressbar"]');
+            const visual = document.getElementById("question-visual");
+            const model = document.getElementById("question-model");
+            document.getElementById("question-progress").textContent = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+            document.getElementById("question-count").textContent = question.category;
+            document.getElementById("question-text").textContent = question.question;
+            visual.hidden = !question.image;
+            if (question.image) {
+                model.setAttribute("src", question.image);
+                model.setAttribute("alt", question.imageAlt);
+            } else {
+                model.removeAttribute("src");
+                model.removeAttribute("alt");
+            }
+            document.getElementById("progress-value").style.width = `${(currentQuestion / questions.length) * 100}%`;
+            progress.setAttribute("aria-valuenow", String(currentQuestion));
+            answerContainer.replaceChildren();
+            feedback.hidden = true;
+            feedback.className = "feedback";
+            document.getElementById("next-button").classList.add("hidden");
+
+            question.answers.forEach((answer, index) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "answer-button";
+                button.innerHTML = `<span class="answer-letter">${String.fromCharCode(65 + index)}</span><span></span>`;
+                button.lastElementChild.textContent = answer;
+                button.addEventListener("click", () => selectAnswer(index));
+                answerContainer.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selectedIndex) {
+            const question = questions[questionOrder[currentQuestion]];
+            const buttons = Array.from(answerContainer.querySelectorAll("button"));
+            const isCorrect = selectedIndex === question.correct;
+
+            buttons.forEach((button, index) => {
+                button.disabled = true;
+                if (index === question.correct) button.classList.add("correct");
+                if (index === selectedIndex && !isCorrect) button.classList.add("incorrect");
+            });
+
+            if (isCorrect) {
+                score += 1;
+                document.getElementById("score").textContent = String(score);
+            }
+
+            feedback.classList.add(isCorrect ? "good" : "try-again");
+            document.getElementById("feedback-title").textContent = isCorrect ? "Tepat sekali!" : "Belum tepat.";
+            document.getElementById("feedback-explanation").textContent = question.explanation;
+            feedback.hidden = false;
+
+            const nextButton = document.getElementById("next-button");
+            nextButton.innerHTML = currentQuestion === questions.length - 1
+                ? 'Lihat Hasil <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i>'
+                : 'Soal Berikutnya <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+            nextButton.classList.remove("hidden");
+            nextButton.focus();
+        }
+
+        function showResult() {
+            questionScreen.classList.add("hidden");
+            resultScreen.classList.remove("hidden");
+            document.getElementById("final-score").textContent = String(score);
+            document.getElementById("perfect-score").classList.toggle("hidden", score !== questions.length);
+            document.getElementById("progress-value").style.width = "100%";
+            document.querySelector('[role="progressbar"]').setAttribute("aria-valuenow", String(questions.length));
+
+            let title = "Tetap semangat!";
+            let message = "Ayo pelajari lagi materi sistem komputer dan coba sekali lagi.";
+            let icon = "fa-book-open";
+            if (score === questions.length) {
+                title = "Sempurna! Kamu hebat!";
+                message = "Semua jawaban benar. Pemahamanmu tentang sistem komputer mantap!";
+                icon = "fa-trophy";
+            } else if (score >= 7) {
+                title = "Kerja bagus!";
+                message = "Pemahamanmu sudah kuat. Coba lagi untuk meraih skor sempurna!";
+                icon = "fa-medal";
+            } else if (score >= 4) {
+                title = "Makin paham!";
+                message = "Kamu sudah menguasai beberapa konsep. Terus berlatih, ya!";
+                icon = "fa-thumbs-up";
+            }
+            document.getElementById("result-title").textContent = title;
+            document.getElementById("result-message").textContent = message;
+            document.getElementById("result-icon").className = `fa-solid ${icon}`;
+        }
+
+        document.getElementById("start-button").addEventListener("click", startQuiz);
+        document.getElementById("restart-button").addEventListener("click", startQuiz);
+        document.getElementById("next-button").addEventListener("click", () => {
+            currentQuestion += 1;
+            if (currentQuestion === questions.length) {
+                showResult();
+            } else {
+                renderQuestion();
+            }
+        });
+    </script>
+</body>
+</html>

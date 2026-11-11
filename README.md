@@ -3,6 +3,8 @@ heheha
 
 ## Penyimpanan dan nilai kuis
 
+`kuis-interaktif.html` adalah kuis latihan terpisah: 10 soal pilihan ganda dengan umpan balik dan penjelasan langsung. Empat soal menampilkan model 3D komponen yang dapat diputar. Skornya hanya ditampilkan di halaman dan tidak dikirim ke spreadsheet. Kuis penilaian dengan identitas peserta tetap tersedia di `kuis.html`.
+
 Halaman kuis mengirim identitas dan jawaban ke Google Apps Script. Kode backend ada di `apps-script\Code.gs` dan menyimpan setiap pengumpulan ke sheet **Hasil Kuis**.
 
 ### Menyiapkan Google Sheets
