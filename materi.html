@@ -80,6 +80,13 @@
         .img-container:hover img {
             transform: scale(1.05);
         }
+        .component-model-viewer {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            --poster-color: transparent;
+        }
 
         /* Image Placeholder Fallback styling when src is empty or invalid */
         .img-placeholder-fallback {
@@ -104,9 +111,24 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        .cpu-model-viewer {
+            display: block;
+            width: 100%;
+            height: clamp(240px, 42vw, 360px);
+            border-radius: 1rem;
+            background-color: #F1F5F9;
+            --poster-color: #F1F5F9;
+        }
+
+        html.dark .cpu-model-viewer {
+            background-color: #1E293B;
+            --poster-color: #1E293B;
+        }
     </style>
     <link rel="stylesheet" href="theme.css">
     <script src="theme.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 </head>
 <body id="top" class="text-slate-800 antialiased selection:bg-brand-cyan selection:text-white">
 
@@ -228,6 +250,14 @@
                     <a href="#hardware" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
                         <span class="w-6 h-6 rounded-lg bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-bold">3</span>
                         <span>Perangkat Keras (Hardware)</span>
+                    </a>
+                    <a href="#cpu-detail" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
+                        <span class="w-6 h-6 rounded-lg bg-purple-100 text-brand-purple text-xs flex items-center justify-center"><i class="fa-solid fa-microchip" aria-hidden="true"></i></span>
+                        <span>CPU dan Siklus Instruksi</span>
+                    </a>
+                    <a href="#bagian-dalam-komputer" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
+                        <span class="w-6 h-6 rounded-lg bg-cyan-100 text-brand-cyan text-xs flex items-center justify-center"><i class="fa-solid fa-computer" aria-hidden="true"></i></span>
+                        <span>Bagian Dalam Komputer</span>
                     </a>
                     <a href="#software" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-brand-blue font-medium transition-colors flex items-center gap-2 border border-slate-100">
                         <span class="w-6 h-6 rounded-lg bg-blue-100 text-brand-blue text-xs flex items-center justify-center font-bold">4</span>
@@ -385,8 +415,7 @@
                         <!-- Keyboard -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER KEYBOARD -->
-                                <img src="https://marketplace.canva.com/jmVAc/MAHBqbjmVAc/1/tl/canva-keyboard-mekanik-hitam-modern-di-atas-meja-kayu-MAHBqbjmVAc.jpg" alt="Keyboard" onerror="handleImageError(this, 'fa-keyboard', 'Keyboard');">
+                                <model-viewer class="component-model-viewer" src="aset/keyboard.glb" alt="Model 3D keyboard" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Keyboard</h4>
                             <p class="text-xs text-slate-500 mt-1">Memasukkan huruf, angka, karakter khusus, dan perintah ketikan.</p>
@@ -394,8 +423,7 @@
                         <!-- Mouse -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER MOUSE -->
-                                <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/A_computer_mouse%2C_black_and_white%2C_retouched%2C_keyboard_visible_in_background.jpg/250px-A_computer_mouse%2C_black_and_white%2C_retouched%2C_keyboard_visible_in_background.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail" alt="Mouse" onerror="handleImageError(this, 'fa-computer-mouse', 'Mouse');">
+                                <model-viewer class="component-model-viewer" src="aset/mouse.glb" alt="Model 3D mouse komputer" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Mouse</h4>
                             <p class="text-xs text-slate-500 mt-1">Menggerakkan pointer kursor, memilih objek, dan melakukan klik.</p>
@@ -403,7 +431,6 @@
                         <!-- Scanner -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER SCANNER -->
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbYjzsxvvKkG-5wXIyQ0cyyyqPj5uP_74plJLs8c81oA&s=10" alt="Scanner" onerror="handleImageError(this, 'fa-print', 'Scanner');">
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Scanner</h4>
@@ -412,7 +439,6 @@
                         <!-- Microphone -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER MICROPHONE -->
                                 <img src="https://rexus.id/cdn/shop/files/XORA-II-BLACK_1.jpg?v=1724148903&width=1200" alt="Microphone" onerror="handleImageError(this, 'fa-microphone', 'Microphone');">
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Microphone</h4>
@@ -435,17 +461,15 @@
                         <!-- Processor -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER PROCESSOR -->
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQONeMeTj-4n9s00U5Kqy-vI011REzs8yEQiz03I8uhR0RPWAc-lajZewUg&s=10" alt="Processor" onerror="handleImageError(this, 'fa-microchip', 'Processor (CPU)');">
+                                <model-viewer class="component-model-viewer" src="aset/cpu.glb" alt="Model 3D processor CPU" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Processor (CPU)</h4>
-                            <p class="text-xs text-slate-500 mt-1">Otak utama komputer yang menjalankan instruksi. Di dalamnya, ALU (Arithmetic Logic Unit) melakukan perhitungan aritmatika dan operasi logika, sedangkan CU (Control Unit) mengatur jalannya instruksi serta mengoordinasikan kerja komponen CPU.</p>
+                            <p class="text-xs text-slate-500 mt-1">Chip pemroses utama yang menjalankan instruksi program. CPU bekerja bersama Control Unit (CU), Arithmetic Logic Unit (ALU), register, dan memori.</p>
                         </div>
                         <!-- Motherboard -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER MOTHERBOARD -->
-                                <img src="https://swalayankomputer.com/wp-content/uploads/2024/03/Pengertian-Motherboard-Fungsi-dan-Jenis-Jenisnya.jpg" alt="Motherboard" onerror="handleImageError(this, 'fa-circuit-board', 'Motherboard');">
+                                <model-viewer class="component-model-viewer" src="aset/motherboard.glb" alt="Model 3D motherboard" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Motherboard</h4>
                             <p class="text-xs text-slate-500 mt-1">Papan sirkuit utama yang menghubungkan seluruh komponen komputer.</p>
@@ -453,14 +477,201 @@
                         <!-- RAM -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER RAM -->
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjIFEtoT8dCoRzx9uQyPUS0cbKTgg-IRA-yEVr6sH9VSFzuJIetie5Ti0&s=10" alt="RAM" onerror="handleImageError(this, 'fa-memory', 'Memori RAM');">
+                                <model-viewer class="component-model-viewer" src="aset/ram.glb" alt="Model 3D RAM" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">RAM</h4>
                             <p class="text-xs text-slate-500 mt-1">Tempat penyimpanan data sementara saat aplikasi sedang dijalankan.</p>
                         </div>
                     </div>
                 </div>
+
+                <section id="cpu-detail" class="scroll-mt-24 bg-white rounded-3xl p-6 sm:p-8 border border-purple-200/70 shadow-sm">
+                    <div class="max-w-3xl mb-7">
+                        <span class="text-xs font-bold text-brand-purple uppercase tracking-wider block mb-1">Pendalaman CPU</span>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Mengenal CPU dan Bagian-Bagiannya</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            CPU (<i>Central Processing Unit</i>) menjalankan instruksi dan mengolah data. Dalam percakapan sehari-hari, CPU kadang disebut sebagai seluruh kotak komputer; secara teknis, CPU adalah chip prosesor yang berada di dalam komputer.
+                        </p>
+                    </div>
+
+                    <figure class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 mb-7">
+                        <model-viewer
+                            id="cpu-model-viewer"
+                            class="cpu-model-viewer"
+                            src="aset/cpu.glb"
+                            alt="Model 3D chip processor CPU"
+                            camera-controls
+                            auto-rotate
+                            auto-rotate-delay="0"
+                            rotation-per-second="20deg"
+                            interaction-prompt="auto"
+                            shadow-intensity="1"
+                            loading="lazy"
+                        ></model-viewer>
+                        <figcaption class="mt-3 text-center text-xs text-slate-500">Model 3D CPU — seret untuk memutar dan gunakan roda tetikus atau gerakan cubit untuk memperbesar.</figcaption>
+                    </figure>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-7">
+                        <article class="rounded-2xl bg-blue-50/70 border border-blue-100 p-5">
+                            <div class="w-10 h-10 rounded-xl bg-brand-blue text-white flex items-center justify-center text-lg mb-3"><i class="fa-solid fa-calculator" aria-hidden="true"></i></div>
+                            <h4 class="font-bold text-slate-900 mb-2">ALU</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed"><i>Arithmetic Logic Unit</i> melakukan operasi aritmetika, seperti penjumlahan dan pengurangan, serta operasi logika, seperti membandingkan dua nilai.</p>
+                        </article>
+                        <article class="rounded-2xl bg-purple-50/70 border border-purple-100 p-5">
+                            <div class="w-10 h-10 rounded-xl bg-brand-purple text-white flex items-center justify-center text-lg mb-3"><i class="fa-solid fa-list-check" aria-hidden="true"></i></div>
+                            <h4 class="font-bold text-slate-900 mb-2">CU</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed"><i>Control Unit</i> mengambil dan menerjemahkan instruksi, mengatur pelaksanaannya, serta mengoordinasikan perpindahan data antara CPU, RAM, dan perangkat lain.</p>
+                        </article>
+                        <article class="rounded-2xl bg-cyan-50/70 border border-cyan-100 p-5">
+                            <div class="w-10 h-10 rounded-xl bg-brand-cyan text-white flex items-center justify-center text-lg mb-3"><i class="fa-solid fa-memory" aria-hidden="true"></i></div>
+                            <h4 class="font-bold text-slate-900 mb-2">Register</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed">Register adalah tempat penyimpanan sangat kecil dan cepat di dalam CPU untuk menampung sementara data, instruksi, atau hasil yang sedang diproses.</p>
+                        </article>
+                    </div>
+
+                    <figure class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6">
+                        <div class="overflow-x-auto pb-2" role="region" aria-label="Diagram arsitektur CPU; geser ke samping pada layar kecil" tabindex="0">
+                            <div class="grid min-w-[1020px] grid-cols-[minmax(0,1.1fr)_2rem_minmax(0,0.9fr)_3.5rem_minmax(0,2fr)_7rem_minmax(0,0.8fr)] items-stretch gap-3">
+                            <div class="space-y-2 rounded-2xl border border-blue-200 bg-blue-50 p-3">
+                                <h4 class="text-center text-xs font-bold uppercase tracking-wide text-slate-900">Perangkat I/O</h4>
+                                <div class="rounded-xl bg-white p-2 text-center text-xs text-slate-700"><i class="fa-solid fa-keyboard mr-1 text-brand-blue" aria-hidden="true"></i>Input: keyboard, mouse</div>
+                                <div class="rounded-xl bg-white p-2 text-center text-xs text-slate-700"><i class="fa-solid fa-hard-drive mr-1 text-brand-blue" aria-hidden="true"></i>Penyimpanan: SSD, HDD</div>
+                                <div class="rounded-xl bg-white p-2 text-center text-xs text-slate-700"><i class="fa-solid fa-desktop mr-1 text-brand-blue" aria-hidden="true"></i>Output: monitor, speaker</div>
+                            </div>
+
+                            <div class="flex flex-col items-center justify-center gap-1 text-center text-[10px] font-semibold text-slate-500">
+                                <span>I/O</span>
+                                <i class="fa-solid fa-arrow-right-long rotate-90 text-brand-blue lg:rotate-0" aria-hidden="true"></i>
+                                <span>Bus</span>
+                            </div>
+
+                            <div class="flex flex-col justify-center rounded-2xl border border-amber-200 bg-yellow-50 p-3 text-center">
+                                <i class="fa-solid fa-right-left mb-2 text-amber-600" aria-hidden="true"></i>
+                                <h4 class="text-sm font-bold text-slate-900">Pengendali I/O</h4>
+                                <p class="mt-1 text-xs leading-relaxed text-slate-600">Mengatur pertukaran data antara perangkat dan CPU.</p>
+                            </div>
+
+                            <div class="flex flex-col items-center justify-center gap-1 text-center text-[10px] font-semibold text-slate-500">
+                                <span>I/O Bus</span>
+                                <i class="fa-solid fa-arrow-right-long rotate-90 text-purple-600 lg:rotate-0" aria-hidden="true"></i>
+                                <span>data</span>
+                            </div>
+
+                            <div class="rounded-2xl border border-purple-300 bg-purple-50 p-3">
+                                <h4 class="mb-2 text-center text-base font-extrabold tracking-widest text-slate-900">CPU</h4>
+                                <div class="grid grid-cols-2 gap-2 text-center">
+                                    <div class="rounded-xl border border-purple-100 bg-white p-2">
+                                        <span class="block text-xs font-bold text-slate-900">CU</span>
+                                        <span class="text-[10px] leading-tight text-slate-600">mengatur instruksi</span>
+                                    </div>
+                                    <div class="rounded-xl border border-purple-100 bg-white p-2">
+                                        <span class="block text-xs font-bold text-slate-900">ALU</span>
+                                        <span class="text-[10px] leading-tight text-slate-600">aritmetika &amp; logika</span>
+                                    </div>
+                                    <div class="rounded-xl border border-purple-100 bg-white p-2">
+                                        <span class="block text-xs font-bold text-slate-900">FPU</span>
+                                        <span class="text-[10px] leading-tight text-slate-600">bilangan pecahan</span>
+                                    </div>
+                                    <div class="rounded-xl border border-purple-100 bg-white p-2">
+                                        <span class="block text-xs font-bold text-slate-900">Cache</span>
+                                        <span class="text-[10px] leading-tight text-slate-600">data yang sering dipakai</span>
+                                    </div>
+                                </div>
+                                <div class="mt-2 rounded-xl border border-purple-200 bg-purple-50 p-2 text-center">
+                                    <span class="block text-xs font-bold text-slate-900">Register</span>
+                                    <span class="text-[10px] leading-tight text-slate-600">MAR: alamat memori · MDR: data memori · register umum</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col justify-center gap-2 text-center text-[10px] font-semibold text-slate-600">
+                                <span class="rounded-lg border border-blue-200 bg-blue-50 px-1.5 py-2">Control Bus ↔</span>
+                                <span class="rounded-lg border border-emerald-200 bg-emerald-50 px-1.5 py-2">Address Bus ↔</span>
+                                <span class="rounded-lg border border-cyan-200 bg-cyan-50 px-1.5 py-2">Data Bus ↔</span>
+                            </div>
+
+                            <div class="flex flex-col items-center justify-center rounded-2xl border border-red-200 bg-red-50 p-3 text-center">
+                                <i class="fa-solid fa-memory mb-2 text-rose-600" aria-hidden="true"></i>
+                                <h4 class="text-sm font-bold text-slate-900">RAM</h4>
+                                <p class="mt-1 text-xs leading-relaxed text-slate-600">Menyimpan sementara instruksi dan data yang sedang digunakan.</p>
+                            </div>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-center text-xs text-slate-500 sm:hidden">Geser diagram ke samping untuk melihat seluruh komponen.</p>
+                        <figcaption class="mt-4 text-center text-xs text-slate-500">Ilustrasi konseptual: pengendali I/O menghubungkan perangkat, sedangkan control bus, address bus, dan data bus membantu CPU berkomunikasi dengan RAM.</figcaption>
+                    </figure>
+
+                    <div class="mt-7">
+                        <h4 class="font-bold text-slate-900 mb-3">Siklus instruksi CPU</h4>
+                        <ol class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                            <li class="rounded-xl border border-slate-200 p-4">
+                                <span class="text-xs font-bold text-brand-blue">1. Fetch</span>
+                                <p class="text-xs text-slate-600 mt-1">CU mengambil instruksi dari memori.</p>
+                            </li>
+                            <li class="rounded-xl border border-slate-200 p-4">
+                                <span class="text-xs font-bold text-brand-purple">2. Decode</span>
+                                <p class="text-xs text-slate-600 mt-1">CU menerjemahkan instruksi agar CPU mengetahui tindakan yang diperlukan.</p>
+                            </li>
+                            <li class="rounded-xl border border-slate-200 p-4">
+                                <span class="text-xs font-bold text-emerald-700">3. Execute</span>
+                                <p class="text-xs text-slate-600 mt-1">CPU menjalankan instruksi; ALU melakukan perhitungan atau operasi logika bila diperlukan.</p>
+                            </li>
+                            <li class="rounded-xl border border-slate-200 p-4">
+                                <span class="text-xs font-bold text-cyan-700">4. Store</span>
+                                <p class="text-xs text-slate-600 mt-1">Hasil sementara disimpan di register atau RAM, lalu dapat dikirim ke output atau media penyimpanan.</p>
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section id="bagian-dalam-komputer" class="scroll-mt-24 bg-white rounded-3xl p-6 sm:p-8 border border-cyan-200/70 shadow-sm">
+                    <div class="max-w-3xl mb-7">
+                        <span class="text-xs font-bold text-brand-cyan uppercase tracking-wider block mb-1">Mengenal Komponen Internal</span>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-3">Bagian-Bagian di Dalam Komputer</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Di dalam casing komputer terdapat beberapa komponen yang bekerja bersama. Susunan dan bentuknya dapat berbeda pada setiap komputer; pada laptop, sebagian komponen dibuat lebih ringkas atau menyatu.
+                        </p>
+                    </div>
+
+                    <figure class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 mb-7">
+                        <img src="aset/bagian-dalam-komputer.jpg" alt="Bagian dalam komputer desktop: processor di bawah heatsink, motherboard, RAM, kartu grafis, power supply, optical drive, dan hard disk." class="w-full h-auto rounded-xl" loading="lazy" decoding="async">
+                        <figcaption class="text-xs text-slate-500 text-center mt-3">Ilustrasi bagian dalam komputer desktop. Processor berada di bawah heatsink; motherboard, RAM, kartu grafis, power supply, optical drive, dan hard disk ditunjukkan pada gambar.</figcaption>
+                    </figure>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <article class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                            <h4 class="font-bold text-slate-900 mb-1">Motherboard</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Papan utama yang menghubungkan komponen dan menyediakan jalur komunikasi.</p>
+                        </article>
+                        <article class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                            <h4 class="font-bold text-slate-900 mb-1">CPU / Processor</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Menjalankan instruksi dan mengolah data dari program.</p>
+                        </article>
+                        <article class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                            <h4 class="font-bold text-slate-900 mb-1">RAM</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Menyimpan sementara data dan program yang sedang digunakan; isinya hilang saat komputer mati.</p>
+                        </article>
+                        <article class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                            <h4 class="font-bold text-slate-900 mb-1">GPU / VGA</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Mengolah tampilan grafis. Pada sebagian komputer, GPU menyatu dengan processor.</p>
+                        </article>
+                        <article class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                            <h4 class="font-bold text-slate-900 mb-1">SSD / HDD</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Menyimpan sistem operasi, aplikasi, dan berkas agar tetap ada setelah komputer dimatikan.</p>
+                        </article>
+                        <article class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                            <h4 class="font-bold text-slate-900 mb-1">Power Supply (PSU)</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Mengubah dan menyalurkan daya listrik ke komponen komputer.</p>
+                        </article>
+                        <article class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                            <h4 class="font-bold text-slate-900 mb-1">Heatsink dan kipas</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Membantu membuang panas agar suhu komponen tetap aman.</p>
+                        </article>
+                        <article class="rounded-2xl bg-slate-50 border border-slate-200 p-4">
+                            <h4 class="font-bold text-slate-900 mb-1">Casing</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Melindungi komponen dan membantu mengatur aliran udara di dalam komputer.</p>
+                        </article>
+                    </div>
+                </section>
 
                 <!-- C. Storage Device -->
                 <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
@@ -472,12 +683,11 @@
                         Perangkat yang digunakan untuk menyimpan dokumen, file multimedia, dan sistem operasi secara permanen maupun sementara.
                     </p>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- HDD -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER HDD -->
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtlJg3VM9R5gl42_2iHrOcAh_OATvfu0ZH_M5mm3dTSw&s=10" alt="Hard Disk Drive" onerror="handleImageError(this, 'fa-hard-drive', 'Hard Disk (HDD)');">
+                                <model-viewer class="component-model-viewer" src="aset/hdd.glb" alt="Model 3D hard disk drive HDD" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Hard Disk Drive (HDD)</h4>
                             <p class="text-xs text-slate-500 mt-1">Media penyimpanan magnetik berkapasitas besar.</p>
@@ -485,8 +695,7 @@
                         <!-- SSD -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER SSD -->
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hakduuOY5qbE_SsBk-H388a6AT9nKluj18xK2RMyAjEqNvc_9kakqDo&s=10" alt="Solid State Drive" onerror="handleImageError(this, 'fa-compact-disc', 'Solid State Drive (SSD)');">
+                                <model-viewer class="component-model-viewer" src="aset/sdd.glb" alt="Model 3D solid state drive SSD" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Solid State Drive (SSD)</h4>
                             <p class="text-xs text-slate-500 mt-1">Media penyimpanan modern berbasis cip flash yang sangat cepat.</p>
@@ -494,7 +703,6 @@
                         <!-- Flashdisk -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER FLASHDISK -->
                                 <img src="https://els.id/wp-content/uploads/2024/10/Sandisk-Cruzer-Blade.png" alt="Flashdisk" onerror="handleImageError(this, 'fa-usb', 'Flashdisk');">
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Flashdisk</h4>
@@ -517,8 +725,7 @@
                         <!-- Monitor -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER MONITOR -->
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSobYCU7DX7EbCYoc6DMSJpqRNZ7AWy_oy3ewX_vO5rAk7HX7znqCuELQ&s=10" alt="Monitor" onerror="handleImageError(this, 'fa-desktop', 'Monitor');">
+                                <model-viewer class="component-model-viewer" src="aset/monitor.glb" alt="Model 3D monitor komputer" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Monitor</h4>
                             <p class="text-xs text-slate-500 mt-1">Menampilkan grafis visual, teks, video, dan antarmuka aplikasi.</p>
@@ -526,8 +733,7 @@
                         <!-- Printer -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER PRINTER -->
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROs4N_O9Jd9Oa8EoJWzpP2-4yQj4Kp1SFnh-gJrYFUXJ4wFaC_CegFTwtH&s=10" alt="Printer" onerror="handleImageError(this, 'fa-print', 'Printer');">
+                                <model-viewer class="component-model-viewer" src="aset/printer.glb" alt="Model 3D printer" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Printer</h4>
                             <p class="text-xs text-slate-500 mt-1">Mencetak file tulisan dan gambar dari komputer ke media kertas.</p>
@@ -535,8 +741,7 @@
                         <!-- Speaker -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER SPEAKER -->
-                                <img src="https://cdn.polytron.co.id/public-assets/polytroncoid/2026/09/audivo-5b.webp" alt="Speaker" onerror="handleImageError(this, 'fa-volume-high', 'Speaker');">
+                                <model-viewer class="component-model-viewer" src="aset/speaker.glb" alt="Model 3D speaker" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="20deg" interaction-prompt="auto" shadow-intensity="1" loading="lazy"></model-viewer>
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Speaker</h4>
                             <p class="text-xs text-slate-500 mt-1">Mengeluarkan efek suara, musik, dan audio dari komputer.</p>
@@ -544,7 +749,6 @@
                         <!-- Projector -->
                         <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-2xl">
                             <div class="img-container mb-3 bg-white">
-                                <!-- PLACEHOLDER PROJECTOR -->
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVLi1yLAupvMepsicMnKde6lROk28BcC3o2fGFQ_mJw7VGDU3nrNTmMDQ&s=10" alt="Projector" onerror="handleImageError(this, 'fa-video', 'Proyektor');">
                             </div>
                             <h4 class="font-bold text-slate-900 text-sm">Projector</h4>
@@ -680,11 +884,68 @@
             <section id="alur-kerja" class="reveal-on-scroll bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-white rounded-3xl p-6 sm:p-10 shadow-xl">
                 <div class="text-center max-w-2xl mx-auto mb-10">
                     <span class="text-xs font-bold text-brand-cyan uppercase tracking-wider block mb-1">Materi 06</span>
-                    <h2 class="text-2xl sm:text-3xl font-bold">Bagaimana Komputer Bekerja?</h2>
-                    <p class="text-slate-300 text-sm mt-2">Sistem komputer mengolah informasi melalui alur kerja berurutan.</p>
+                    <h2 class="text-2xl sm:text-3xl font-bold">Hubungan Input, Proses, Output, dan Penyimpanan</h2>
+                    <p class="text-slate-300 text-sm mt-2">Data masuk melalui perangkat input, diproses CPU, lalu ditampilkan sebagai output. Hasilnya dapat disimpan jika diperlukan.</p>
                 </div>
 
-                <!-- Step Diagram Container -->
+                <figure class="rounded-2xl border border-white/10 bg-white/5 p-3 sm:p-5 mb-6">
+                    <svg class="hidden sm:block w-full h-auto" viewBox="0 0 1000 230" role="img" aria-labelledby="ipos-diagram-title ipos-diagram-desc">
+                        <title id="ipos-diagram-title">Diagram siklus input, proses, output, dan penyimpanan</title>
+                        <desc id="ipos-diagram-desc">Keyboard memasukkan data 8 kali 5, CPU memprosesnya, monitor menampilkan hasil 40, dan pengguna dapat menyimpan hasil ke SSD atau HDD.</desc>
+                        <defs>
+                            <marker id="ipos-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                                <path d="M0,0 L9,4.5 L0,9 Z" fill="#cbd5e1"></path>
+                            </marker>
+                        </defs>
+                        <rect x="10" y="45" width="205" height="130" rx="18" fill="#1e3a8a" stroke="#60a5fa" stroke-width="2"></rect>
+                        <text x="112" y="82" text-anchor="middle" fill="#bfdbfe" font-size="15" font-weight="700">1. INPUT</text>
+                        <text x="112" y="112" text-anchor="middle" fill="#fff" font-size="20" font-weight="700">Keyboard</text>
+                        <text x="112" y="142" text-anchor="middle" fill="#dbeafe" font-size="16">8 × 5</text>
+                        <rect x="270" y="45" width="205" height="130" rx="18" fill="#4c1d95" stroke="#c4b5fd" stroke-width="2"></rect>
+                        <text x="372" y="82" text-anchor="middle" fill="#ddd6fe" font-size="15" font-weight="700">2. PROSES</text>
+                        <text x="372" y="112" text-anchor="middle" fill="#fff" font-size="20" font-weight="700">CPU / ALU</text>
+                        <text x="372" y="142" text-anchor="middle" fill="#ede9fe" font-size="16">8 × 5 = 40</text>
+                        <rect x="530" y="45" width="205" height="130" rx="18" fill="#065f46" stroke="#6ee7b7" stroke-width="2"></rect>
+                        <text x="632" y="82" text-anchor="middle" fill="#a7f3d0" font-size="15" font-weight="700">3. OUTPUT</text>
+                        <text x="632" y="112" text-anchor="middle" fill="#fff" font-size="20" font-weight="700">Monitor</text>
+                        <text x="632" y="142" text-anchor="middle" fill="#d1fae5" font-size="16">Hasil: 40</text>
+                        <rect x="790" y="45" width="200" height="130" rx="18" fill="#164e63" stroke="#67e8f9" stroke-width="2"></rect>
+                        <text x="890" y="82" text-anchor="middle" fill="#a5f3fc" font-size="15" font-weight="700">4. STORAGE</text>
+                        <text x="890" y="112" text-anchor="middle" fill="#fff" font-size="20" font-weight="700">SSD / HDD</text>
+                        <text x="890" y="142" text-anchor="middle" fill="#cffafe" font-size="16">Simpan bila perlu</text>
+                        <path d="M215 110 H260 M475 110 H520 M735 110 H780" fill="none" stroke="#cbd5e1" stroke-width="3" marker-end="url(#ipos-arrow)"></path>
+                    </svg>
+                    <svg class="block sm:hidden w-full h-auto" viewBox="0 0 340 570" role="img" aria-labelledby="ipos-mobile-title ipos-mobile-desc">
+                        <title id="ipos-mobile-title">Siklus input, proses, output, dan penyimpanan untuk layar kecil</title>
+                        <desc id="ipos-mobile-desc">Keyboard memasukkan 8 kali 5, CPU menghitung hasilnya, monitor menampilkan 40, dan hasil dapat disimpan ke SSD atau HDD.</desc>
+                        <defs>
+                            <marker id="ipos-mobile-arrow" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto">
+                                <path d="M0,0 L8,0 L4,8 Z" fill="#cbd5e1"></path>
+                            </marker>
+                        </defs>
+                        <rect x="15" y="12" width="310" height="100" rx="15" fill="#1e3a8a" stroke="#60a5fa" stroke-width="2"></rect>
+                        <text x="170" y="40" text-anchor="middle" fill="#bfdbfe" font-size="15" font-weight="700">1. INPUT</text>
+                        <text x="170" y="68" text-anchor="middle" fill="#fff" font-size="19" font-weight="700">Keyboard</text>
+                        <text x="170" y="92" text-anchor="middle" fill="#dbeafe" font-size="16">8 × 5</text>
+                        <path d="M170 114 V135" fill="none" stroke="#cbd5e1" stroke-width="3" marker-end="url(#ipos-mobile-arrow)"></path>
+                        <rect x="15" y="145" width="310" height="100" rx="15" fill="#4c1d95" stroke="#c4b5fd" stroke-width="2"></rect>
+                        <text x="170" y="173" text-anchor="middle" fill="#ddd6fe" font-size="15" font-weight="700">2. PROSES</text>
+                        <text x="170" y="201" text-anchor="middle" fill="#fff" font-size="19" font-weight="700">CPU / ALU</text>
+                        <text x="170" y="225" text-anchor="middle" fill="#ede9fe" font-size="16">8 × 5 = 40</text>
+                        <path d="M170 247 V268" fill="none" stroke="#cbd5e1" stroke-width="3" marker-end="url(#ipos-mobile-arrow)"></path>
+                        <rect x="15" y="278" width="310" height="100" rx="15" fill="#065f46" stroke="#6ee7b7" stroke-width="2"></rect>
+                        <text x="170" y="306" text-anchor="middle" fill="#a7f3d0" font-size="15" font-weight="700">3. OUTPUT</text>
+                        <text x="170" y="334" text-anchor="middle" fill="#fff" font-size="19" font-weight="700">Monitor</text>
+                        <text x="170" y="358" text-anchor="middle" fill="#d1fae5" font-size="16">Hasil: 40</text>
+                        <path d="M170 380 V401" fill="none" stroke="#cbd5e1" stroke-width="3" marker-end="url(#ipos-mobile-arrow)"></path>
+                        <rect x="15" y="411" width="310" height="100" rx="15" fill="#164e63" stroke="#67e8f9" stroke-width="2"></rect>
+                        <text x="170" y="439" text-anchor="middle" fill="#a5f3fc" font-size="15" font-weight="700">4. STORAGE</text>
+                        <text x="170" y="467" text-anchor="middle" fill="#fff" font-size="19" font-weight="700">SSD / HDD</text>
+                        <text x="170" y="491" text-anchor="middle" fill="#cffafe" font-size="16">Simpan bila perlu</text>
+                    </svg>
+                    <figcaption class="text-xs text-slate-300 text-center mt-2">Contoh: angka 8 × 5 dimasukkan, dihitung CPU, ditampilkan sebagai 40, lalu hasilnya bisa disimpan.</figcaption>
+                </figure>
+
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
                     
                     <!-- Step 1: Input -->
@@ -694,7 +955,7 @@
                             <h3 class="font-bold text-lg text-brand-accent mb-2"><i class="fa-solid fa-keyboard mr-1"></i> Input</h3>
                             <p class="text-xs text-slate-200 leading-relaxed">Data atau instruksi dimasukkan pengguna melalui perangkat masukan.</p>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-blue-200 italic">Contoh: Mengetik angka 5 + 5 pada keyboard.</div>
+                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-blue-200 italic">Contoh: Mengetik operasi 8 × 5 menggunakan keyboard.</div>
                     </div>
 
                     <!-- Step 2: Process -->
@@ -702,9 +963,9 @@
                         <div>
                             <div class="w-10 h-10 rounded-xl bg-purple-500 text-white flex items-center justify-center font-bold text-lg mb-3">2</div>
                             <h3 class="font-bold text-lg text-purple-300 mb-2"><i class="fa-solid fa-microchip mr-1"></i> Process</h3>
-                            <p class="text-xs text-slate-200 leading-relaxed">Processor (CPU) mengolah data sesuai perintah yang diterima.</p>
+                            <p class="text-xs text-slate-200 leading-relaxed">CU mengatur instruksi dan ALU menghitung atau membandingkan data. RAM menyuplai data yang sedang digunakan.</p>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-purple-200 italic">Contoh: CPU menghitung hasil penjumlahan 5 + 5 = 10.</div>
+                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-purple-200 italic">Contoh: ALU menghitung 8 × 5 = 40.</div>
                     </div>
 
                     <!-- Step 3: Output -->
@@ -712,9 +973,9 @@
                         <div>
                             <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-lg mb-3">3</div>
                             <h3 class="font-bold text-lg text-emerald-300 mb-2"><i class="fa-solid fa-desktop mr-1"></i> Output</h3>
-                            <p class="text-xs text-slate-200 leading-relaxed">Hasil akhir pemrosesan ditampilkan kepada pengguna.</p>
+                            <p class="text-xs text-slate-200 leading-relaxed">Hasil pemrosesan disampaikan kepada pengguna melalui monitor, printer, atau speaker.</p>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-emerald-200 italic">Contoh: Layar monitor menampilkan angka 10.</div>
+                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-emerald-200 italic">Contoh: Monitor menampilkan hasil 40.</div>
                     </div>
 
                     <!-- Step 4: Storage -->
@@ -722,9 +983,9 @@
                         <div>
                             <div class="w-10 h-10 rounded-xl bg-cyan-500 text-white flex items-center justify-center font-bold text-lg mb-3">4</div>
                             <h3 class="font-bold text-lg text-cyan-300 mb-2"><i class="fa-solid fa-database mr-1"></i> Storage</h3>
-                            <p class="text-xs text-slate-200 leading-relaxed">Data dapat disimpan di memori atau media penyimpanan (SSD/HDD).</p>
+                            <p class="text-xs text-slate-200 leading-relaxed">Hasil yang ingin disimpan dapat ditulis ke SSD, HDD, atau flashdisk agar tetap tersedia setelah komputer dimatikan.</p>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-cyan-200 italic">Catatan: Penyimpanan sifatnya opsional sesuai kebutuhan.</div>
+                        <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-cyan-200 italic">RAM menyimpan data sementara; penyimpanan jangka panjang memerlukan SSD/HDD. Tidak semua hasil harus disimpan.</div>
                     </div>
 
                 </div>
@@ -762,7 +1023,7 @@
                     </li>
                     <li class="flex items-start gap-2">
                         <i class="fa-solid fa-circle-check text-brand-blue mt-1"></i>
-                        <span>Alur kerja komputer secara umum mengikuti siklus: <b>Input → Process → Output → (Storage)</b>.</span>
+                        <span>Data melalui <b>Input → Process → Output</b>; hasil dapat disimpan ke media penyimpanan jika diperlukan. RAM bersifat sementara, sedangkan SSD/HDD menyimpan data jangka panjang.</span>
                     </li>
                 </ul>
 
@@ -880,7 +1141,7 @@
         const observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.1
+            threshold: 0.01
         };
 
         const observer = new IntersectionObserver((entries) => {
